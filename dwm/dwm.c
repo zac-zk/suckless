@@ -1865,7 +1865,7 @@ void run(void)
 
 void runAutostart(void)
 {
-    system("cd /home/volta/scripts; ./autostart.sh &");
+    system("cd ~/suckless/scripts; ./autostart.sh &");
 }
 
 void scan(void)

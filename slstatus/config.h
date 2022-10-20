@@ -70,8 +70,8 @@ static const struct arg args[] = {
 	{ ram_free,		" %s  ",	NULL},
 	{ cpu_perc,		" %s%%  ",	NULL},
 	{ run_command,	" %s°C  ",	"tlp-stat -t | grep CPU |awk '{print $4}'"},
-	{ run_command,	"%s  ",		"/home/volta/suckless/dwm/scripts/dwmbar-functions/dwm_alsa.sh"},
+	{ run_command,	"%s  ",		"~/suckless/dwm/scripts/dwmbar-functions/dwm_alsa.sh"},
 	{ run_command,	" %s  ",	"xbacklight -get"},
-	{ run_command,	"%s  ",		"/home/volta/suckless/dwm/scripts/dwmbar-functions/dwm_battery.sh"},
+	{ run_command,	"%s  ",		"~/suckless/dwm/scripts/dwmbar-functions/dwm_battery.sh"},
 	{ datetime, 	"%s ",      "%m-%d %T" },
 };
