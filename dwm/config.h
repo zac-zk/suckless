@@ -95,46 +95,40 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+/* custom commands*/
+static const char *browsercmd[]  = { "google-chrome-stable", NULL };
+static const char *upvolcmd[]       = { "/home/volta/suckless/scripts/vol-up.sh",      NULL };
+static const char *filemanager[] = {"pcmanfm", NULL};
+static const char *lockcmd[] = {"slock", NULL};
+static const char *downvolcmd[]     = { "/home/volta/suckless/scripts/vol-down.sh",    NULL };
+static const char *mutevolcmd[]     = { "/home/volta/suckless/scripts/vol-toggle.sh",  NULL };
+static const char *upbacklightcmd[]	= { "/home/volta/suckless/scripts/backlight-up.sh", NULL };
+static const char *downbacklightcmd[]	= { "/home/volta/suckless/scripts/backlight-down.sh", NULL };
+static const char *screenshotcmd[]  = { "/home/volta/suckless/scripts/screenshot.sh",  NULL };
+static const char *wpchangecmd[]	= {"/home/volta/suckless/scripts/wp-change.sh", NULL};
 /* commands */
-//static const char *menucmd[]		= {"rofi", "-show", "run", NULL};
 static char dmenumon[2] = "0";
 static const char *menucmd[]	=	{"dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL};
 static const char *termcmd[]	= {"st", NULL};
-static const char *browsercmd[]  = { "chromium", NULL };
-
-static const char *upvolcmd[]       = { "/home/volta/suckless/scripts/vol-up.sh",      NULL };
-static const char *downvolcmd[]     = { "/home/volta/suckless/scripts/vol-down.sh",    NULL };
-static const char *mutevolcmd[]     = { "/home/volta/suckless/scripts/vol-toggle.sh",  NULL };
-
-static const char *upbacklightcmd[]	= { "/home/volta/suckless/scripts/backlight-up.sh", NULL };
-static const char *downbacklightcmd[]	= { "/home/volta/suckless/scripts/backlight-down.sh", NULL };
-
-static const char *screenshotcmd[]  = { "/home/volta/suckless/scripts/screenshot.sh",  NULL };
-static const char *wpchangecmd[]	= {"/home/volta/suckless/scripts/wp-change.sh", NULL};
 static const char scratchpadname[] = "scratchpad";
-//static const char *scratchpadcmd[] = { "alacritty" , "-t" , scratchpadname, "--config-file=/home/volta/.config/alacritty/scratch.yml", NULL };
 static const char *scratchpadcmd[]	= {"st", "-t", scratchpadname, "-g", "60x15", NULL};
 
-static const char *filemanager[] = {"pcmanfm", NULL};
-
-
-static const char *lockcmd[] = {"slock", NULL};
 
 static Key keys[] = {
 	/* modifier                     key            function        argument              */
-	{ MODKEY,						XK_w,		   spawn,		   {.v = wpchangecmd }	},
-	{ MODKEY,                       XK_d,          spawn,          {.v = menucmd }      },
-	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd }       },
 	{ MODKEY,                       XK_c,          spawn,          {.v = browsercmd }    },
+	{ MODKEY,						XK_e,		   spawn,		   {.v = filemanager }   },
 	{ MODKEY|ShiftMask,				XK_l,		   spawn,		   {.v = lockcmd }   },
 	{ MODKEY,             			XK_F3,         spawn,          {.v = upvolcmd }      },
 	{ MODKEY,             			XK_F2,         spawn,          {.v = downvolcmd }    },
 	{ MODKEY,			            XK_F1,         spawn,          {.v = mutevolcmd }    },
 	{ MODKEY,             			XK_F12,        spawn,          {.v = upbacklightcmd }   },
 	{ MODKEY,             			XK_F11,        spawn,          {.v = downbacklightcmd } },
+	{ MODKEY,						XK_w,		   spawn,		   {.v = wpchangecmd }	},
+	{ MODKEY,                       XK_d,          spawn,          {.v = menucmd }      },
+	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd }       },
 	{ NULL,             			XK_Print,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_apostrophe, togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY,						XK_e,		   spawn,		   {.v = filemanager }   },
 	{ MODKEY,                       XK_b,          togglebar,      {0}                   },
 	{ MODKEY|ShiftMask,             XK_Right,      rotatestack,    {.i = +1 }            },
 	{ MODKEY|ShiftMask,             XK_Left,       rotatestack,    {.i = -1 }            },
