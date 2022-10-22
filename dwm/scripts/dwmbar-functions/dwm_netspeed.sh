@@ -11,9 +11,10 @@ function get_bytes {
 function get_velocity {
     value=$1
     old_value=$2
-    now=$3
+    old_time=$3
+    time=$(date +%s%N)
 
-    timediff=$(($now - $old_time))
+    timediff=$(($time - $old_time))
     velKB=$(echo "1000000000*($value-$old_value)/1024/$timediff" | bc)
     if test "$velKB" -gt 1024; then
         echo $(echo "scale=2; $velKB/1024" | bc)MB/s
@@ -32,7 +33,8 @@ dwm_netspeed() {
     # Calculates speeds
     vel_recv=$(get_velocity $received_bytes $old_received_bytes $now)
     vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
-    echo -e "↓ $vel_recv ↑ $vel_trans"
+    # echo -e "↓ $vel_recv ↑ $vel_trans"
+    echo -e "↓ $vel_recv"
 
 }
 

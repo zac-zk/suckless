@@ -24,6 +24,6 @@ export IDENTIFIER="unicode"
 . "$DIR/dwmbar-functions/dwm_netspeed.sh"
 . "$DIR/dwmbar-functions/dwm_kernel.sh"
 
-xsetroot -name "$(dwm_netspeed) | $(dwm_kernel) | $(dwm_alsa) | $(dwm_backlight) | $(dwm_battery) | [$(dwm_date)]"
+xsetroot -name "[$(dwm_netspeed)][$(dwm_kernel)][$(dwm_alsa)][$(dwm_backlight)][$(dwm_battery)][$(dwm_date)]"
 
 exit 0
