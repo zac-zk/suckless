@@ -1,25 +1,19 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx = 1; /* border pixel of windows */
-static const unsigned int gappx     = 5;        /* gap pixel between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
-static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
-static const int showbar            = 1;     /* 0 means no bar */
-static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[] = {"JetBrains Mono:size=13"};
-static const char dmenufont[] = "JetBrains Mono:size=15";
+static const unsigned int borderpx = 1;		  /* border pixel of windows */
+static const unsigned int gappx = 5;		  /* gap pixel between windows */
+static const unsigned int snap = 32;		  /* snap pixel */
+static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft = 0;  /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2; /* systray spacing */
+static const int systraypinningfailfirst = 1; /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray = 1;			  /* 0 means no systray */
+static const int showbar = 1;				  /* 0 means no bar */
+static const int topbar = 1;				  /* 0 means bottom bar */
+static const char *fonts[] = {"JetBrains Mono:size=13:antialias=true:autohint=true"};
+static const char dmenufont[] = "JetBrains Mono:size=15:antialias=true:autohint=true";
 
-static const char normbgcolor[]           = "#2E3440";
-static const char normbordercolor[]       = "#3B4252";
-static const char normfgcolor[]           = "#ECEFF4";
-static const char selfgcolor[]            = "#D8DEE9";
-static const char selbordercolor[]        = "#5E81AC";
-static const char selbgcolor[]            = "#5E81AC";
 static char termcol0[] = "#3b4252"; /* black   */
 static char termcol1[] = "#bf616a"; /* red     */
 static char termcol2[] = "#a3be8c"; /* green   */
@@ -34,15 +28,15 @@ static const char *colors[][3] = {
 	[SchemeNorm] = {termcol0, termcol0, termcol0},
 	[SchemeSel] = {termcol7, termcol1, termcol1},
 	[SchemeHid] = {termcol0, termcol4, termcol4},
-	[SchemeStatus]  = { termcol4, termcol0,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { termcol7, termcol1,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm]  = { termcol7, termcol0,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel]  = { termcol7, termcol1,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm]  = { termcol7, termcol0,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeStatus] = {termcol4, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel] = {termcol7, termcol1, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsNorm] = {termcol7, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeInfoSel] = {termcol7, termcol1, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm] = {termcol7, termcol0, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 static const char *const autostart[] = {
-	"bash","-c","/home/volta/suckless/dwm/scripts/autostart.sh", NULL,
+	"bash", "-c", "/home/volta/suckless/dwm/scripts/autostart.sh", NULL,
 	NULL /* terminate */
 };
 
@@ -83,7 +77,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact = 0.55;	 /* factor of master area size [0.05..0.95] */
+static const float mfact = 0.5;		 /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;		 /* number of clients in master area */
 static const int resizehints = 1;	 /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -124,7 +118,7 @@ static const char *wpchangecmd[] = {"/home/volta/suckless/dwm/scripts/wp-change.
 static const char *dmenucmd[] = {"dmenu_run", NULL};
 static const char *termcmd[] = {"st", NULL};
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "60x15", NULL };
+static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "60x15", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -139,10 +133,10 @@ static const Key keys[] = {
 	{MODKEY, XK_w, spawn, {.v = wpchangecmd}},
 	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
 	{MODKEY, XK_Return, spawn, {.v = termcmd}},
-	{ MODKEY,                       XK_apostrophe,  togglescratch,  {.v = scratchpadcmd } },
+	{MODKEY, XK_apostrophe, togglescratch, {.v = scratchpadcmd}},
 	{MODKEY, XK_b, togglebar, {0}},
-	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
+	{MODKEY | ShiftMask, XK_bracketleft, rotatestack, {.i = +1}},
+	{MODKEY | ShiftMask, XK_bracketright, rotatestack, {.i = -1}},
 	{MODKEY, XK_j, focusstackvis, {.i = +1}},
 	{MODKEY, XK_k, focusstackvis, {.i = -1}},
 	{MODKEY | ShiftMask, XK_j, focusstackhid, {.i = +1}},
@@ -154,12 +148,12 @@ static const Key keys[] = {
 	{MODKEY, XK_Return, zoom, {0}},
 	{MODKEY, XK_Tab, view, {0}},
 	{MODKEY | ShiftMask, XK_q, killclient, {0}},
-	{MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
-	{MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
-	{MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
+	{MODKEY | ShiftMask, XK_t, setlayout, {.v = &layouts[0]}},
+	{MODKEY | ShiftMask, XK_f, setlayout, {.v = &layouts[1]}},
+	{MODKEY | ShiftMask, XK_m, setlayout, {.v = &layouts[2]}},
 	{MODKEY, XK_space, setlayout, {0}},
 	{MODKEY | ShiftMask, XK_space, togglefloating, {0}},
-	{ MODKEY,             XK_f,      togglefullscr,  {0} },
+	{MODKEY, XK_f, fullscreen, {0}},
 	{MODKEY, XK_0, view, {.ui = ~0}},
 	{MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
 	{MODKEY, XK_comma, focusmon, {.i = -1}},
@@ -177,15 +171,15 @@ static const Key keys[] = {
 						TAGKEYS(XK_6, 5)
 							TAGKEYS(XK_7, 6)
 								TAGKEYS(XK_8, 7)
-									TAGKEYS(XK_9, 8){MODKEY|ControlMask | ShiftMask, XK_c, quit, {0}},
+									TAGKEYS(XK_9, 8){MODKEY | ControlMask | ShiftMask, XK_c, quit, {0}},
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ClkTagBar, MODKEY, Button1, tag, {0}},
+	{ClkTagBar, MODKEY, Button3, toggletag, {0}},
 	{ClkWinTitle, 0, Button1, togglewin, {0}},
 	{ClkWinTitle, 0, Button2, zoom, {0}},
 	{ClkStatusText, 0, Button2, spawn, {.v = termcmd}},
