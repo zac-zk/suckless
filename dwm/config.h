@@ -31,14 +31,14 @@ static char termcol7[] = "#e5e9f0"; /* white   */
 
 static const char *colors[][3] = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = {normfgcolor, normbgcolor, normbordercolor},
-	[SchemeSel] = {selfgcolor, selbgcolor, termcol1},
-	[SchemeHid] = {selbgcolor, normfgcolor, selbgcolor},
-	[SchemeStatus]  = { termcol1, termcol0,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { termcol7, termcol5,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeNorm] = {termcol0, termcol0, termcol0},
+	[SchemeSel] = {termcol7, termcol1, termcol1},
+	[SchemeHid] = {termcol0, termcol4, termcol4},
+	[SchemeStatus]  = { termcol4, termcol0,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { termcol7, termcol1,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm]  = { termcol7, termcol0,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel]  = { selfgcolor, selbgcolor,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm]  = { normfgcolor, normbgcolor,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeInfoSel]  = { termcol7, termcol1,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm]  = { termcol7, termcol0,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 static const char *const autostart[] = {
@@ -47,7 +47,7 @@ static const char *const autostart[] = {
 };
 
 /* tagging */
-static const char *tags[] = {"", "", "", "", "", "", "", ""};
+static const char *tags[] = {"", "", "", "", "", "", "", ""};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -121,7 +121,7 @@ static const char *downbacklightcmd[] = {"/home/volta/suckless/dwm/scripts/backl
 static const char *screenshotcmd[] = {"/home/volta/suckless/dwm/scripts/screenshot.sh", NULL};
 static const char *wpchangecmd[] = {"/home/volta/suckless/dwm/scripts/wp-change.sh", NULL};
 /* commands */
-static const char *dmenucmd[] = {"dmenu_run", "-fn", dmenufont, "-nb", termcol0, "-nf", termcol7, "-sb", termcol5, "-sf", termcol7, NULL};
+static const char *dmenucmd[] = {"dmenu_run", NULL};
 static const char *termcmd[] = {"st", NULL};
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "60x15", NULL };
