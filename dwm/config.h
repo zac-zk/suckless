@@ -32,7 +32,7 @@ static char termcol7[] = "#e5e9f0"; /* white   */
 static const char *colors[][3] = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = {normfgcolor, normbgcolor, normbordercolor},
-	[SchemeSel] = {selfgcolor, selbgcolor, selbordercolor},
+	[SchemeSel] = {selfgcolor, selbgcolor, termcol1},
 	[SchemeHid] = {selbgcolor, normfgcolor, selbgcolor},
 	[SchemeStatus]  = { termcol1, termcol0,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { termcol7, termcol5,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
@@ -42,7 +42,7 @@ static const char *colors[][3] = {
 };
 
 static const char *const autostart[] = {
-	"bash","-c","/home/volta/suckless/scripts/autostart.sh", NULL,
+	"bash","-c","/home/volta/suckless/dwm/scripts/autostart.sh", NULL,
 	NULL /* terminate */
 };
 
@@ -111,15 +111,15 @@ static const Layout layouts[] = {
 
 /* custom commands*/
 static const char *browsercmd[] = {"google-chrome-stable", NULL};
-static const char *upvolcmd[] = {"/home/volta/suckless/scripts/vol-up.sh", NULL};
 static const char *filemanager[] = {"pcmanfm", NULL};
 static const char *lockcmd[] = {"slock", NULL};
-static const char *downvolcmd[] = {"/home/volta/suckless/scripts/vol-down.sh", NULL};
-static const char *mutevolcmd[] = {"/home/volta/suckless/scripts/vol-toggle.sh", NULL};
-static const char *upbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-up.sh", NULL};
-static const char *downbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-down.sh", NULL};
-static const char *screenshotcmd[] = {"/home/volta/suckless/scripts/screenshot.sh", NULL};
-static const char *wpchangecmd[] = {"/home/volta/suckless/scripts/wp-change.sh", NULL};
+static const char *upvolcmd[] = {"/home/volta/suckless/dwm/scripts/vol-up.sh", NULL};
+static const char *downvolcmd[] = {"/home/volta/suckless/dwm/scripts/vol-down.sh", NULL};
+static const char *mutevolcmd[] = {"/home/volta/suckless/dwm/scripts/vol-toggle.sh", NULL};
+static const char *upbacklightcmd[] = {"/home/volta/suckless/dwm/scripts/backlight-up.sh", NULL};
+static const char *downbacklightcmd[] = {"/home/volta/suckless/dwm/scripts/backlight-down.sh", NULL};
+static const char *screenshotcmd[] = {"/home/volta/suckless/dwm/scripts/screenshot.sh", NULL};
+static const char *wpchangecmd[] = {"/home/volta/suckless/dwm/scripts/wp-change.sh", NULL};
 /* commands */
 static const char *dmenucmd[] = {"dmenu_run", "-fn", dmenufont, "-nb", termcol0, "-nf", termcol7, "-sb", termcol5, "-sf", termcol7, NULL};
 static const char *termcmd[] = {"st", NULL};
@@ -141,6 +141,8 @@ static const Key keys[] = {
 	{MODKEY, XK_Return, spawn, {.v = termcmd}},
 	{ MODKEY,                       XK_apostrophe,  togglescratch,  {.v = scratchpadcmd } },
 	{MODKEY, XK_b, togglebar, {0}},
+	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
 	{MODKEY, XK_j, focusstackvis, {.i = +1}},
 	{MODKEY, XK_k, focusstackvis, {.i = -1}},
 	{MODKEY | ShiftMask, XK_j, focusstackhid, {.i = +1}},
