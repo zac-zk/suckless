@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx = 1;		  /* border pixel of windows */
+static const unsigned int borderpx = 2;		  /* border pixel of windows */
 static const unsigned int gappx = 5;		  /* gap pixel between windows */
 static const unsigned int snap = 32;		  /* snap pixel */
 static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -131,6 +131,7 @@ static const Key keys[] = {
 	{MODKEY, XK_F12, spawn, {.v = upbacklightcmd}},
 	{MODKEY, XK_F11, spawn, {.v = downbacklightcmd}},
 	{MODKEY, XK_w, spawn, {.v = wpchangecmd}},
+	{NULL,XK_Print,spawn,{.v = screenshotcmd}},
 	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
 	{MODKEY, XK_Return, spawn, {.v = termcmd}},
 	{MODKEY, XK_apostrophe, togglescratch, {.v = scratchpadcmd}},

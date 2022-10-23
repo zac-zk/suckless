@@ -26,6 +26,3 @@ get_battery_combined_percent() {
     
     echo $percent;
 }
-
-dwm_battery
-

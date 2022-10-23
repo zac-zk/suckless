@@ -9,7 +9,6 @@
 dwm_alsa () {
     VOL=$(amixer -M get Master | tail -n1 | sed -r "s/.*\[(.*)%\].*/\1/")
     MUTE=$(amixer get Master | tail -n1 | sed -r "s/.*\[(on|off)\]$/\1/")
-    printf "%s" "$SEP1"
     if [ "$MUTE" = "on" ]; then
         if [ "$VOL" -eq 0 ]; then
             printf "🔇"
@@ -23,6 +22,4 @@ dwm_alsa () {
     else
         printf "MUTE"
 	fi
-    printf "%s\n" "$SEP2"
 }
-dwm_alsa

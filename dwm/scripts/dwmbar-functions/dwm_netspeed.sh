@@ -37,5 +37,3 @@ dwm_netspeed() {
     echo -e "↓ $vel_recv"
 
 }
-
-dwm_netspeed
