@@ -11,7 +11,9 @@ static const int systraypinningfailfirst = 1; /* 1: if pinning fails, display sy
 static const int showsystray = 1;			  /* 0 means no systray */
 static const int showbar = 1;				  /* 0 means no bar */
 static const int topbar = 1;				  /* 0 means bottom bar */
-static const char *fonts[] = {"JetBrains Mono:size=13:antialias=true:autohint=true"};
+static const char *fonts[] = {"JetBrains Mono:size=13:antialias=true:autohint=true",
+							  "WenQuanYi Micro Hei:size=13:antialias=true:autohint=true",
+							  "Symbols Nerd Font:pixelsize=16:type=2048-em:antialias=true:autohint=true"};
 static const char dmenufont[] = "JetBrains Mono:size=15:antialias=true:autohint=true";
 
 static char termcol0[] = "#3b4252"; /* black   */
@@ -41,7 +43,7 @@ static const char *const autostart[] = {
 };
 
 /* tagging */
-static const char *tags[] = {"", "", "", "", "", "", "", ""};
+static const char *tags[] = {"", "", "", "", "", "ﴼ", "", ""};
 
 static const Rule rules[] = {
 	/* xprop(1):
