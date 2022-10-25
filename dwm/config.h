@@ -116,6 +116,7 @@ static const char *upbacklightcmd[] = {"/home/volta/suckless/dwm/scripts/backlig
 static const char *downbacklightcmd[] = {"/home/volta/suckless/dwm/scripts/backlight-down.sh", NULL};
 static const char *screenshotcmd[] = {"/home/volta/suckless/dwm/scripts/screenshot.sh", NULL};
 static const char *wpchangecmd[] = {"/home/volta/suckless/dwm/scripts/wp-change.sh", NULL};
+static const char *xdisplaycmd[] = {"/home/volta/suckless/dwm/scripts/xdisplay.sh", NULL};
 /* commands */
 static const char *dmenucmd[] = {"dmenu_run", NULL};
 static const char *termcmd[] = {"st", NULL};
@@ -134,6 +135,7 @@ static const Key keys[] = {
 	{MODKEY, XK_F11, spawn, {.v = downbacklightcmd}},
 	{MODKEY, XK_w, spawn, {.v = wpchangecmd}},
 	{NULL,XK_Print,spawn,{.v = screenshotcmd}},
+	{MODKEY | ShiftMask, XK_x, spawn, {.v = xdisplaycmd}},
 	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
 	{MODKEY, XK_Return, spawn, {.v = termcmd}},
 	{MODKEY, XK_apostrophe, togglescratch, {.v = scratchpadcmd}},
