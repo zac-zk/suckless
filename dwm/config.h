@@ -38,7 +38,7 @@ static const char *colors[][3] = {
 };
 
 static const char *const autostart[] = {
-	"bash", "-c", "/home/volta/suckless/dwm/scripts/autostart.sh", NULL,
+	"bash", "-c", "/home/volta/suckless/scripts/autostart.sh", NULL,
 	NULL /* terminate */
 };
 
@@ -109,14 +109,14 @@ static const Layout layouts[] = {
 static const char *browsercmd[] = {"google-chrome-stable", NULL};
 static const char *filemanager[] = {"pcmanfm", NULL};
 static const char *lockcmd[] = {"slock", NULL};
-static const char *upvolcmd[] = {"/home/volta/suckless/dwm/scripts/vol-up.sh", NULL};
-static const char *downvolcmd[] = {"/home/volta/suckless/dwm/scripts/vol-down.sh", NULL};
-static const char *mutevolcmd[] = {"/home/volta/suckless/dwm/scripts/vol-toggle.sh", NULL};
-static const char *upbacklightcmd[] = {"/home/volta/suckless/dwm/scripts/backlight-up.sh", NULL};
-static const char *downbacklightcmd[] = {"/home/volta/suckless/dwm/scripts/backlight-down.sh", NULL};
-static const char *screenshotcmd[] = {"/home/volta/suckless/dwm/scripts/screenshot.sh", NULL};
-static const char *wpchangecmd[] = {"/home/volta/suckless/dwm/scripts/wp-change.sh", NULL};
-static const char *xdisplaycmd[] = {"/home/volta/suckless/dwm/scripts/xdisplay.sh", NULL};
+static const char *upvolcmd[] = {"/home/volta/suckless/scripts/vol-up.sh", NULL};
+static const char *downvolcmd[] = {"/home/volta/suckless/scripts/vol-down.sh", NULL};
+static const char *mutevolcmd[] = {"/home/volta/suckless/scripts/vol-toggle.sh", NULL};
+static const char *upbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-up.sh", NULL};
+static const char *downbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-down.sh", NULL};
+static const char *screenshotcmd[] = {"/home/volta/suckless/scripts/screenshot.sh", NULL};
+static const char *wpchangecmd[] = {"/home/volta/suckless/scripts/wp-change.sh", NULL};
+static const char *xdisplaycmd[] = {"/home/volta/suckless/scripts/xdisplay.sh", NULL};
 /* commands */
 static const char *dmenucmd[] = {"dmenu_run", NULL};
 static const char *termcmd[] = {"st", NULL};
