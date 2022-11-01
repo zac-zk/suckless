@@ -14,7 +14,6 @@ static const int topbar = 1;				  /* 0 means bottom bar */
 static const char *fonts[] = {"JetBrains Mono:size=13:antialias=true:autohint=true",
 							  "WenQuanYi Micro Hei:size=13:antialias=true:autohint=true",
 							  "Symbols Nerd Font:pixelsize=16:type=2048-em:antialias=true:autohint=true"};
-static const char dmenufont[] = "JetBrains Mono:size=15:antialias=true:autohint=true";
 
 static char termcol0[] = "#3b4252"; /* black   */
 static char termcol1[] = "#bf616a"; /* red     */
@@ -29,7 +28,7 @@ static const char *colors[][3] = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = {termcol0, termcol0, termcol0},
 	[SchemeSel] = {termcol7, termcol1, termcol1},
-	[SchemeStatus] = {termcol4, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
+	[SchemeStatus] = {termcol7, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel] = {termcol7, termcol1, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm] = {termcol7, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
 	[SchemeInfoSel] = {termcol7, termcol1, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
