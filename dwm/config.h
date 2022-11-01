@@ -29,7 +29,6 @@ static const char *colors[][3] = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = {termcol0, termcol0, termcol0},
 	[SchemeSel] = {termcol7, termcol1, termcol1},
-	[SchemeHid] = {termcol0, termcol4, termcol4},
 	[SchemeStatus] = {termcol4, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel] = {termcol7, termcol1, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm] = {termcol7, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -120,8 +119,9 @@ static const char *xdisplaycmd[] = {"/home/volta/suckless/scripts/xdisplay.sh", 
 /* commands */
 static const char *dmenucmd[] = {"dmenu_run", NULL};
 static const char *termcmd[] = {"st", NULL};
+
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "60x15", NULL};
+static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "70x15", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -134,40 +134,35 @@ static const Key keys[] = {
 	{MODKEY, XK_F12, spawn, {.v = upbacklightcmd}},
 	{MODKEY, XK_F11, spawn, {.v = downbacklightcmd}},
 	{MODKEY, XK_w, spawn, {.v = wpchangecmd}},
-	{NULL,XK_Print,spawn,{.v = screenshotcmd}},
+	{NULL, XK_Print, spawn, {.v = screenshotcmd}},
 	{MODKEY | ShiftMask, XK_x, spawn, {.v = xdisplaycmd}},
 	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
 	{MODKEY, XK_Return, spawn, {.v = termcmd}},
 	{MODKEY, XK_apostrophe, togglescratch, {.v = scratchpadcmd}},
 	{MODKEY, XK_b, togglebar, {0}},
-	{MODKEY | ShiftMask, XK_bracketleft, rotatestack, {.i = +1}},
-	{MODKEY | ShiftMask, XK_bracketright, rotatestack, {.i = -1}},
-	{MODKEY, XK_j, focusstackvis, {.i = +1}},
-	{MODKEY, XK_k, focusstackvis, {.i = -1}},
-	{MODKEY | ShiftMask, XK_j, focusstackhid, {.i = +1}},
-	{MODKEY | ShiftMask, XK_k, focusstackhid, {.i = -1}},
+	{MODKEY | ShiftMask, XK_j, rotatestack, {.i = +1}},
+	{MODKEY | ShiftMask, XK_k, rotatestack, {.i = -1}},
+	{MODKEY, XK_j, focusstack, {.i = +1}},
+	{MODKEY, XK_k, focusstack, {.i = -1}},
 	{MODKEY, XK_o, incnmaster, {.i = +1}},
 	{MODKEY, XK_p, incnmaster, {.i = -1}},
 	{MODKEY, XK_h, setmfact, {.f = -0.05}},
 	{MODKEY, XK_l, setmfact, {.f = +0.05}},
-	{MODKEY, XK_Return, zoom, {0}},
+	{MODKEY | ShiftMask, XK_Return, zoom, {0}},
 	{MODKEY, XK_Tab, view, {0}},
 	{MODKEY | ShiftMask, XK_q, killclient, {0}},
 	{MODKEY | ShiftMask, XK_t, setlayout, {.v = &layouts[0]}},
 	{MODKEY | ShiftMask, XK_f, setlayout, {.v = &layouts[1]}},
 	{MODKEY | ShiftMask, XK_m, setlayout, {.v = &layouts[2]}},
+	{MODKEY, XK_f, fullscreen, {0}},
 	{MODKEY, XK_space, setlayout, {0}},
 	{MODKEY | ShiftMask, XK_space, togglefloating, {0}},
-	{MODKEY, XK_f, fullscreen, {0}},
 	{MODKEY, XK_0, view, {.ui = ~0}},
 	{MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
 	{MODKEY, XK_comma, focusmon, {.i = -1}},
 	{MODKEY, XK_period, focusmon, {.i = +1}},
 	{MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
 	{MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
-	{MODKEY, XK_s, show, {0}},
-	{MODKEY | ShiftMask, XK_s, showall, {0}},
-	{MODKEY | ShiftMask, XK_h, hide, {0}},
 	TAGKEYS(XK_1, 0)
 		TAGKEYS(XK_2, 1)
 			TAGKEYS(XK_3, 2)
@@ -176,7 +171,7 @@ static const Key keys[] = {
 						TAGKEYS(XK_6, 5)
 							TAGKEYS(XK_7, 6)
 								TAGKEYS(XK_8, 7)
-									TAGKEYS(XK_9, 8){MODKEY | ControlMask | ShiftMask, XK_c, quit, {0}},
+									TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_c, quit, {0}},
 };
 
 /* button definitions */
@@ -185,7 +180,6 @@ static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ClkTagBar, MODKEY, Button1, tag, {0}},
 	{ClkTagBar, MODKEY, Button3, toggletag, {0}},
-	{ClkWinTitle, 0, Button1, togglewin, {0}},
 	{ClkWinTitle, 0, Button2, zoom, {0}},
 	{ClkStatusText, 0, Button2, spawn, {.v = termcmd}},
 	{ClkClientWin, MODKEY, Button1, movemouse, {0}},
