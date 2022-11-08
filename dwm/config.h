@@ -26,13 +26,13 @@ static char termcol7[] = "#e5e9f0"; /* white   */
 
 static const char *colors[][3] = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = {termcol0, termcol0, termcol0},
-	[SchemeSel] = {termcol7, termcol1, termcol1},
-	[SchemeStatus] = {termcol7, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel] = {termcol7, termcol1, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm] = {termcol7, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel] = {termcol7, termcol1, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm] = {termcol7, termcol0, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeNorm] = {termcol2, termcol2, termcol2},
+	[SchemeSel] = {termcol0, termcol1, termcol1},
+	[SchemeStatus] = {termcol0, termcol2, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel] = {termcol0, termcol1, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsNorm] = {termcol0, termcol2, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeInfoSel] = {termcol0, termcol1, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm] = {termcol0, termcol2, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 static const char *const autostart[] = {
