@@ -1,40 +1,24 @@
-#!/bin/sh
+dwm_netspeed(){
 
-function get_bytes {
-    # Find active network interface
-    interface=$(ip route get 8.8.8.8 2>/dev/null | awk '{print $5}')
-    line=$(grep $interface /proc/net/dev | cut -d ':' -f 2 | awk '{print "received_bytes="$1, "transmitted_bytes="$9}')
-    eval $line
-    now=$(date +%s%N)
+	ether="wlan0"
+
+	#upsp=`cat /proc/net/dev | grep $ether | awk '{print $10}'`
+	dosp=`cat /proc/net/dev | grep $ether | awk '{print $2}'`
+
+	sleep 1
+
+	#upsp1=`cat /proc/net/dev | grep $ether | awk '{print $10}'`
+	dosp1=`cat /proc/net/dev | grep $ether | awk '{print $2}'`
+
+	#nupsp=$(printf "%.2f" `echo "scale=2;($upsp1 - $upsp)/1024/1024" | bc`)
+	kb=$(printf "%d" `echo "($dosp1 - $dosp)/1024" | bc`)
+	#echo -e "Upload   speed :\033[49;33m $nupsp Mb/s \033[0m"
+	
+	if test "$kb" -gt 1024;then
+			mb=$(printf "%.2f" `echo "scale=2;$kb/1024" | bc`)
+			echo -e "↓ $mb Mb/s"
+	else
+		echo -e "↓ $kb Kb/s"
+	fi
+
 }
-
-function get_velocity {
-    value=$1
-    old_value=$2
-    old_time=$3
-    time=$(date +%s%N)
-
-    timediff=$(($time - $old_time))
-    velKB=$(echo "1000000000*($value-$old_value)/1024/$timediff" | bc)
-    if test "$velKB" -gt 1024; then
-        echo $(echo "scale=2; $velKB/1024" | bc)MB/s
-    else
-        echo ${velKB}KB/s
-    fi
-}
-
-dwm_netspeed() {
-    get_bytes
-    old_received_bytes=$received_bytes
-    old_transmitted_bytes=$transmitted_bytes
-    old_time=$now
-
-    get_bytes
-    # Calculates speeds
-    vel_recv=$(get_velocity $received_bytes $old_received_bytes $now)
-    vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
-    # echo -e "↓ $vel_recv ↑ $vel_trans"
-    echo -e "↓ $vel_recv"
-}
-
-dwm_netspeed
