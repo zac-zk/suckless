@@ -41,7 +41,7 @@ static const char *const autostart[] = {
 };
 
 /* tagging */
-static const char *tags[] = {"", "", "", "", "", "ﴼ", "", ""};
+static const char *tags[] = {"", "", "", "", "", "ﴼ", "", ""};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -104,7 +104,7 @@ static const Layout layouts[] = {
 	}
 
 /* custom commands*/
-static const char *browsercmd[] = {"google-chrome-stable", NULL};
+static const char *browsercmd[] = {"firefox", NULL};
 static const char *filemanager[] = {"pcmanfm", NULL};
 static const char *lockcmd[] = {"slock", NULL};
 static const char *upvolcmd[] = {"/home/volta/suckless/scripts/vol-up.sh", NULL};
@@ -120,7 +120,7 @@ static const char *dmenucmd[] = {"dmenu_run", NULL};
 static const char *termcmd[] = {"st", NULL};
 
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "70x15", NULL};
+static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "56x14", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */

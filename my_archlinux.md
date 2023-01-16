@@ -23,9 +23,9 @@ sudo pacman -S archlinuxcn-keyring
 
 ```
 yay -S acpi acpitool			##电源管理?
-yay -S numlockx xorg-xbacklight 
+yay -S acpilight                ##亮度控制
 yay -S alsa-utils pulseaudio-alsa	##声卡驱动
-yay -S pulseaudio alsamixer pavucontrol		##终端音频管理
+yay -S pulseaudio alsamixer		##终端音频管理
 yay -S blueman bluez
 yay -S mesa lib32-mesa			##intel驱动
 yay -S nvidia-lts nvidia-utils nvidia-setting ##nvidia驱动
@@ -52,7 +52,6 @@ xterm -geometry 80x50+494+51 &
 xterm -geometry 80x20+494-0 &
 exec xterm -geometry 80x66+0+0 -name login
 添加下面内容，然后保存退出。
-numlocks &
 exec dwm
 ```
 
@@ -85,13 +84,13 @@ SDL_IM_MODULE=fcitx
 ## 5.安装常用字体
 
 ```
-sudo pacman -S wqy-bitmapfont wqy-microhei  wqy-zenhei adobe-source-code-pro-fonts  adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-cn-fonts ttf-monaco ttf-dejavu ttf-hanazono noto-fonts noto-fonts-cjk noto-fonts-emoji nerd-fonts-jetbrains-mono
+sudo pacman -S wqy-microhei adobe-source-code-pro-fonts  adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-cn-fonts ttf-monaco ttf-dejavu ttf-hanazono noto-fonts noto-fonts-cjk noto-fonts-emoji nerd-fonts-complete
 ```
 
 ## 6. wps安装和问题解决
 
 ```
-sudo pacman -S wps-office wps-office-fonts wps-office-mui-zh-cn
+sudo pacman -S wps-office wps-office-mui-zh-cn
 ```
 
 解决wps不能激活fcitx5的问题

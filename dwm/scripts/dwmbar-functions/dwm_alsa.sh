@@ -11,15 +11,15 @@ dwm_alsa () {
     MUTE=$(amixer get Master | tail -n1 | sed -r "s/.*\[(on|off)\]$/\1/")
     if [ "$MUTE" = "on" ]; then
         if [ "$VOL" -eq 0 ]; then
-            printf "🔇"
+            printf "ﱝ"
         elif [ "$VOL" -gt 0 ] && [ "$VOL" -le 33 ]; then
-            printf "🔈 %s%%" "$VOL"
+            printf "奄 %s%%" "$VOL"
         elif [ "$VOL" -gt 33 ] && [ "$VOL" -le 66 ]; then
-            printf "🔉 %s%%" "$VOL"
+            printf "奔 %s%%" "$VOL"
         else
-            printf "🔊 %s%%" "$VOL"
+            printf "墳 %s%%" "$VOL"
         fi
     else
-        printf "MUTE"
+        printf "婢"
 	fi
 }

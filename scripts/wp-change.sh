@@ -1,3 +1,3 @@
 #!/bin/bash
 
-feh --bg-fill --no-fehbg --randomize ~/data/Pictures/wallpaper/Horizontal ~/data/Pictures/wallpaper/Horizontal
+feh --bg-fill --no-fehbg --randomize /mnt/data/Pictures/wallpaper/Horizontal /mnt/data/Pictures/wallpaper/Horizontal

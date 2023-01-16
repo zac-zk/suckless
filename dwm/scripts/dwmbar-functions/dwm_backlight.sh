@@ -7,5 +7,5 @@
 # Dependencies: xbacklight
 
 dwm_backlight () {
-    printf "☀ %s%%" "$(xbacklight -get)"
+    printf " %s%%" "$(xbacklight -get)"
 }

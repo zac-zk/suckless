@@ -35,5 +35,6 @@ dwm_netspeed() {
     vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
     # echo -e "↓ $vel_recv ↑ $vel_trans"
     echo -e "↓ $vel_recv"
-
 }
+
+dwm_netspeed

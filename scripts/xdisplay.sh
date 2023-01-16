@@ -22,5 +22,6 @@ do
     fi
 done
 
-xrandr --output $DEFAULT_OUTPUT --auto $EXECUTE
-~/suckless/dwm/scripts/wp-change.sh
+echo -e $EXECUTE
+#xrandr --output $DEFAULT_OUTPUT --auto $EXECUTE
+~/suckless/scripts/wp-change.sh
