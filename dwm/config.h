@@ -11,28 +11,41 @@ static const int systraypinningfailfirst = 1; /* 1: if pinning fails, display sy
 static const int showsystray = 1;			  /* 0 means no systray */
 static const int showbar = 1;				  /* 0 means no bar */
 static const int topbar = 1;				  /* 0 means bottom bar */
-static const char *fonts[] = {"JetBrains Mono:size=13:antialias=true:autohint=true",
-							  "WenQuanYi Micro Hei:size=13:antialias=true:autohint=true",
-							  "Symbols Nerd Font:pixelsize=16:type=2048-em:antialias=true:autohint=true"};
+static const char *fonts[] = {"JetBrains Mono:size=14:antialias=true:autohint=true",
+							  "WenQuanYi Micro Hei:size=14:antialias=true:autohint=true",
+							  "Symbols Nerd Font:pixelsize=18:type=2048-em:antialias=true:autohint=true"};
 
-static char termcol0[] = "#3b4252"; /* black   */
-static char termcol1[] = "#bf616a"; /* red     */
-static char termcol2[] = "#a3be8c"; /* green   */
-static char termcol3[] = "#ebcb8b"; /* yellow  */
-static char termcol4[] = "#81a1c1"; /* blue    */
-static char termcol5[] = "#b48ead"; /* magenta */
-static char termcol6[] = "#88c0d0"; /* cyan    */
-static char termcol7[] = "#e5e9f0"; /* white   */
+// static char termcol0[] = "#3b4252"; /* black   */
+// static char termcol1[] = "#bf616a"; /* red     */
+// static char termcol2[] = "#a3be8c"; /* green   */
+// static char termcol3[] = "#ebcb8b"; /* yellow  */
+// static char termcol4[] = "#81a1c1"; /* blue    */
+// static char termcol5[] = "#b48ead"; /* magenta */
+// static char termcol6[] = "#88c0d0"; /* cyan    */
+// static char termcol7[] = "#e5e9f0"; /* white   */
+
+static char termcol0[] = "#282a36";	 /* Background   */
+static char termcol1[] = "#44475a";	 /* Current Line     */
+static char termcol2[] = "#44475a";	 /* Selection   */
+static char termcol3[] = "#f8f8f2";	 /* Foreground  */
+static char termcol4[] = "#6272a4";	 /* Comment    */
+static char termcol5[] = "#8be9fd";	 /* Cyan    */
+static char termcol6[] = "#50fa7b";	 /* Green    */
+static char termcol7[] = "#ffb86c";	 /* Orange    */
+static char termcol8[] = "#ff79c6";	 /* Pink    */
+static char termcol9[] = "#bd93f9";	 /* Purple    */
+static char termcol10[] = "#ff5555"; /* Red    */
+static char termcol11[] = "#f1fa8c"; /* Yellow    */
 
 static const char *colors[][3] = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = {termcol2, termcol2, termcol2},
-	[SchemeSel] = {termcol0, termcol1, termcol1},
-	[SchemeStatus] = {termcol0, termcol2, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel] = {termcol0, termcol1, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm] = {termcol0, termcol2, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel] = {termcol0, termcol1, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm] = {termcol0, termcol2, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeNorm] = {termcol0, termcol0, termcol0},
+	[SchemeSel] = {termcol0, termcol9, termcol0},
+	[SchemeStatus] = {termcol4, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel] = {termcol9, termcol0, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsNorm] = {termcol4, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeInfoSel] = {termcol9, termcol2, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm] = {termcol4, termcol2, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 static const char *const autostart[] = {
@@ -98,9 +111,12 @@ static const Layout layouts[] = {
 		{MODKEY | ControlMask | ShiftMask, KEY, toggletag, {.ui = 1 << TAG}},
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd)                                           \
-	{                                                        \
-		.v = (const char *[]) { "/bin/sh", "-c", cmd, NULL } \
+#define SHCMD(cmd)                     \
+	{                                  \
+		.v = (const char *[])          \
+		{                              \
+			"/bin/sh", "-c", cmd, NULL \
+		}                              \
 	}
 
 /* custom commands*/
