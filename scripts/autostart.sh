@@ -3,7 +3,6 @@
 bash -c '~/suckless/scripts/tap-to-click.sh &'
 bash -c '~/suckless/scripts/inverse-scroll.sh &'
 bash -c '~/suckless/scripts/wp-change.sh &'
-bash -c '~/suckless/dwm/scripts/dwm-status.sh &'
 #bash -c  '~/suckless/scripts/dynamic_wallpaper.sh &'
 
 arr=("redshift" "clash" "pnmixer" "copyq" "nm-applet" "picom -b" "fcitx5")

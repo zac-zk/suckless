@@ -15,15 +15,6 @@ static const char *fonts[] = {"JetBrains Mono:size=14:antialias=true:autohint=tr
 							  "WenQuanYi Micro Hei:size=14:antialias=true:autohint=true",
 							  "Symbols Nerd Font:pixelsize=18:type=2048-em:antialias=true:autohint=true"};
 
-// static char termcol0[] = "#3b4252"; /* black   */
-// static char termcol1[] = "#bf616a"; /* red     */
-// static char termcol2[] = "#a3be8c"; /* green   */
-// static char termcol3[] = "#ebcb8b"; /* yellow  */
-// static char termcol4[] = "#81a1c1"; /* blue    */
-// static char termcol5[] = "#b48ead"; /* magenta */
-// static char termcol6[] = "#88c0d0"; /* cyan    */
-// static char termcol7[] = "#e5e9f0"; /* white   */
-
 static char termcol0[] = "#282a36";	 /* Background   */
 static char termcol1[] = "#44475a";	 /* Current Line     */
 static char termcol2[] = "#44475a";	 /* Selection   */
@@ -41,11 +32,11 @@ static const char *colors[][3] = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = {termcol0, termcol0, termcol0},
 	[SchemeSel] = {termcol0, termcol9, termcol0},
-	[SchemeStatus] = {termcol4, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
+	[SchemeStatus] = {termcol3, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel] = {termcol9, termcol0, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm] = {termcol4, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeTagsNorm] = {termcol3, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
 	[SchemeInfoSel] = {termcol9, termcol2, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm] = {termcol4, termcol2, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm] = {termcol3, termcol0, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 static const char *const autostart[] = {

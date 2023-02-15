@@ -21,12 +21,12 @@ static char termcol10[] = "#ff5555"; /* Red    */
 static char termcol11[] = "#f1fa8c"; /* Yellow    */
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
-	[SchemeNorm] = {termcol4, termcol0},
+	[SchemeNorm] = {termcol3, termcol0},
 	[SchemeSel] = {termcol9, termcol0},
 	[SchemeSelHighlight] = {termcol9, termcol2},
-	[SchemeNormHighlight] = {termcol4, termcol0},
+	[SchemeNormHighlight] = {termcol3, termcol0},
 	[SchemeOut] = {"#000000", "#00ffff"},
-	[SchemeOutHighlight] = {termcol4, "#00ffff"},
+	[SchemeOutHighlight] = {termcol3, "#00ffff"},
 };
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines = 0;

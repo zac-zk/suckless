@@ -12,3 +12,4 @@ dwm_date () {
         printf "%s" "$(date "+%u %m-%d %T")"
     fi
 }
+dwm_date
