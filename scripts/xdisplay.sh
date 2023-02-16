@@ -18,10 +18,10 @@ do
     then
     	EXECUTE+="--output $CURRENT --auto --right-of $DEFAULT_OUTPUT "
     else
-        EXECUTE+="--output $CURRENT --off "
-    fi
+      EXECUTE+="--output $CURRENT --off "
+  fi
 done
 
 echo -e $EXECUTE
-#xrandr --output $DEFAULT_OUTPUT --auto $EXECUTE
+xrandr --output $DEFAULT_OUTPUT --auto --primary $EXECUTE
 ~/suckless/scripts/wp-change.sh
