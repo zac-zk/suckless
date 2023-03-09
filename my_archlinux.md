@@ -1,4 +1,4 @@
-# 我的Archlinux/suckless系列 配置指南
+# 我的 Archlinux/suckless 系列 配置指南
 
 ## 1. 配置软件源
 
@@ -17,19 +17,19 @@ sudo pacman -Syu
 sudo pacman -S archlinuxcn-keyring
 ```
 
-## 2.配置suckless系列
+## 2.配置 suckless 系列
 
 系统管理工具相关
 
 ```
-yay -S acpi acpitool			##电源管理?
+yay -S acpi                ##电源管理?
 yay -S acpilight                ##亮度控制
-yay -S alsa-utils pulseaudio-alsa	##声卡驱动
-yay -S pulseaudio alsamixer		##终端音频管理
+yay -S alsa-utils pulseaudio-alsa    ##声卡驱动
+yay -S pulseaudio alsamixer        ##终端音频管理
 yay -S blueman bluez
-yay -S mesa lib32-mesa			##intel驱动
+yay -S mesa lib32-mesa            ##intel驱动
 yay -S nvidia-lts nvidia-utils nvidia-setting ##nvidia驱动
-yay -S mesa-demos				##驱动测试工具
+yay -S mesa-demos                ##驱动测试工具
 ```
 
 dwm:
@@ -38,9 +38,9 @@ dwm:
 从github下载suckless系列配置
 ```
 
-编辑快捷键时,可以使用 *xev* 命令查看键位的名称
+编辑快捷键时,可以使用 _xev_ 命令查看键位的名称
 
-安装xorg套餐
+安装 xorg 套餐
 
 ```
 sudo pacman -S xorg-server xorg-xinit
@@ -55,7 +55,7 @@ exec xterm -geometry 80x66+0+0 -name login
 exec dwm
 ```
 
-## 3. 配置aur
+## 3. 配置 aur
 
 安装 yay
 
@@ -64,9 +64,9 @@ sudo pacman -S yay
 yay --aururl="https://aur.tuna.tsinghua.edu.cn" --save
 ```
 
-## 4.  *fcitx5* 输入法
+## 4. _fcitx5_ 输入法
 
-安装fcitx5相关组件
+安装 fcitx5 相关组件
 
 ```
 sudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-gtk fcitx5-qt fcitx5-material-color
@@ -84,18 +84,18 @@ SDL_IM_MODULE=fcitx
 ## 5.安装常用字体
 
 ```
-sudo pacman -S wqy-microhei adobe-source-code-pro-fonts  adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-cn-fonts ttf-monaco ttf-dejavu ttf-hanazono noto-fonts noto-fonts-cjk noto-fonts-emoji nerd-fonts-complete
+sudo pacman -S wqy-microhei noto-fonts noto-fonts-cjk ttc-insevka ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-1000-em ttf-twemoji
 ```
 
-## 6. wps安装和问题解决
+## 6. wps 安装和问题解决
 
 ```
 sudo pacman -S wps-office wps-office-mui-zh-cn
 ```
 
-解决wps不能激活fcitx5的问题
+解决 wps 不能激活 fcitx5 的问题
 
-编辑 */usr/bin* 目录下的wps wpp wpspdf et
+编辑 _/usr/bin_ 目录下的 wps wpp wpspdf et
 在第二行加入
 
 ```
@@ -106,46 +106,37 @@ export QT_IM_MODULE="fcitx5"
 
 ```
 yay -S google-chrome filezilla vscodium-bin gimp flameshot goldendict
-yay -S namacs 					##看图
+yay -S namacs                     ##看图
 yay -S feh picom
 yay -S timeshift gparted openssh
-yay -S virtualbox linux-lts-header	##header选择根据自己的内核来,这里是lts版本,具体见wiki
+yay -S virtualbox linux-lts-header    ##header选择根据自己的内核来,这里是lts版本,具体见wiki
 ## 微信安装见https://github.com/countstarlight/deepin-wine-wechat-arch
-yay -S lxappearance				##主题管理
-yay -S network-manager-applet	##网络托盘,nm-applet启动
-yay -S font-manager				##字体管理
+yay -S lxappearance                ##主题管理
+yay -S network-manager-applet    ##网络托盘,nm-applet启动
+yay -S font-manager                ##字体管理
 yay -S pcmanfm libmtp gvfs-mtp gvfs-nfs ##pcmanfm文件管理,后面的用于方便挂载硬盘
-yay -S vlc					##视频播放
-yay -S pnmixer				##音量托盘
-yay -S unzip-natspec unarchiver	##前者替代unzip,解决解压中文乱码,后者万能解压
-yay -S xarchiver						##图形压缩/解压软件
+yay -S vlc                    ##视频播放
+yay -S pnmixer                ##音量托盘
+yay -S unzip-natspec unarchiver    ##前者替代unzip,解决解压中文乱码,后者万能解压
+yay -S xarchiver                        ##图形压缩/解压软件
 yay -S jdk11-openjdk jdk8-openjdk
 
 ```
 
 ## 9.问题解决
 
-### 1.dwm下idea灰屏
+### 1.dwm 下 idea 灰屏
 
-安装wmname
+安装 wmname
 
 ```
 yay -S wmname
 ```
 
-编辑 *~/.xinitrc* ,在第二行开始加入:
+编辑 _~/.xinitrc_ ,在第二行开始加入:
 
 ```
 export _JAVA_AWT_WM_NONREPARENTING=1
 export AWT_TOOLKIT=MToolkit
 wmname LG3D
 ```
-
-
-
-
-
-
-
-
-
