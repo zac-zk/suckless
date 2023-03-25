@@ -4,52 +4,57 @@
 #include <sys/types.h>
 
 /* macros */
-#define MIN(a, b)		((a) < (b) ? (a) : (b))
-#define MAX(a, b)		((a) < (b) ? (b) : (a))
-#define LEN(a)			(sizeof(a) / sizeof(a)[0])
-#define BETWEEN(x, a, b)	((a) <= (x) && (x) <= (b))
-#define DIVCEIL(n, d)		(((n) + ((d) - 1)) / (d))
-#define DEFAULT(a, b)		(a) = (a) ? (a) : (b)
-#define LIMIT(x, a, b)		(x) = (x) < (a) ? (a) : (x) > (b) ? (b) : (x)
-#define ATTRCMP(a, b)		((a).mode != (b).mode || (a).fg != (b).fg || \
-				(a).bg != (b).bg)
-#define TIMEDIFF(t1, t2)	((t1.tv_sec-t2.tv_sec)*1000 + \
-				(t1.tv_nsec-t2.tv_nsec)/1E6)
-#define MODBIT(x, set, bit)	((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) < (b) ? (b) : (a))
+#define LEN(a) (sizeof(a) / sizeof(a)[0])
+#define BETWEEN(x, a, b) ((a) <= (x) && (x) <= (b))
+#define DIVCEIL(n, d) (((n) + ((d)-1)) / (d))
+#define DEFAULT(a, b) (a) = (a) ? (a) : (b)
+#define LIMIT(x, a, b) (x) = (x) < (a) ? (a) : (x) > (b) ? (b) \
+														 : (x)
+#define ATTRCMP(a, b) ((a).mode != (b).mode || (a).fg != (b).fg || \
+					   (a).bg != (b).bg)
+#define TIMEDIFF(t1, t2) ((t1.tv_sec - t2.tv_sec) * 1000 + \
+						  (t1.tv_nsec - t2.tv_nsec) / 1E6)
+#define MODBIT(x, set, bit) ((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
 
-#define TRUECOLOR(r,g,b)	(1 << 24 | (r) << 16 | (g) << 8 | (b))
-#define IS_TRUECOL(x)		(1 << 24 & (x))
+#define TRUECOLOR(r, g, b) (1 << 24 | (r) << 16 | (g) << 8 | (b))
+#define IS_TRUECOL(x) (1 << 24 & (x))
 
-enum glyph_attribute {
-	ATTR_NULL       = 0,
-	ATTR_SET        = 1 << 0,
-	ATTR_BOLD       = 1 << 1,
-	ATTR_FAINT      = 1 << 2,
-	ATTR_ITALIC     = 1 << 3,
-	ATTR_UNDERLINE  = 1 << 4,
-	ATTR_BLINK      = 1 << 5,
-	ATTR_REVERSE    = 1 << 6,
-	ATTR_INVISIBLE  = 1 << 7,
-	ATTR_STRUCK     = 1 << 8,
-	ATTR_WRAP       = 1 << 9,
-	ATTR_WIDE       = 1 << 10,
-	ATTR_WDUMMY     = 1 << 11,
-	ATTR_SELECTED   = 1 << 12,
+enum glyph_attribute
+{
+	ATTR_NULL = 0,
+	ATTR_SET = 1 << 0,
+	ATTR_BOLD = 1 << 1,
+	ATTR_FAINT = 1 << 2,
+	ATTR_ITALIC = 1 << 3,
+	ATTR_UNDERLINE = 1 << 4,
+	ATTR_BLINK = 1 << 5,
+	ATTR_REVERSE = 1 << 6,
+	ATTR_INVISIBLE = 1 << 7,
+	ATTR_STRUCK = 1 << 8,
+	ATTR_WRAP = 1 << 9,
+	ATTR_WIDE = 1 << 10,
+	ATTR_WDUMMY = 1 << 11,
+	ATTR_SELECTED = 1 << 12,
 	ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
 };
 
-enum selection_mode {
+enum selection_mode
+{
 	SEL_IDLE = 0,
 	SEL_EMPTY = 1,
 	SEL_READY = 2
 };
 
-enum selection_type {
+enum selection_type
+{
 	SEL_REGULAR = 1,
 	SEL_RECTANGULAR = 2
 };
 
-enum selection_snap {
+enum selection_snap
+{
 	SNAP_WORD = 1,
 	SNAP_LINE = 2
 };
@@ -62,16 +67,18 @@ typedef unsigned short ushort;
 typedef uint_least32_t Rune;
 
 #define Glyph Glyph_
-typedef struct {
-	Rune u;           /* character code */
-	ushort mode;      /* attribute flags */
-	uint32_t fg;      /* foreground  */
-	uint32_t bg;      /* background  */
+typedef struct
+{
+	Rune u;		 /* character code */
+	ushort mode; /* attribute flags */
+	uint32_t fg; /* foreground  */
+	uint32_t bg; /* background  */
 } Glyph;
 
 typedef Glyph *Line;
 
-typedef union {
+typedef union
+{
 	int i;
 	uint ui;
 	float f;

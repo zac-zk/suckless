@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"random": "cpp",
+		"select.h": "c"
+	}
+}

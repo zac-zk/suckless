@@ -1,8 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx = 1;		  /* border pixel of windows */
-static const unsigned int gappx = 5;		  /* gap pixel between windows */
+static const unsigned int borderpx = 2;		  /* border pixel of windows */
+static const unsigned int gappx = 10;		  /* gap pixel between windows */
+static int gappi = 12;                         /* 窗口与窗口 缝隙大小 */
+static int gappo = 12;                         /* 窗口与边缘 缝隙大小 */
+static const int newclientathead = 0;          /* 定义新窗口在栈顶还是栈底 */
 static const unsigned int snap = 32;		  /* snap pixel */
 static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;  /* 0: systray in the right corner, >0: systray on left of status text */
@@ -31,7 +34,7 @@ static char termcol11[] = "#f1fa8c"; /* Yellow    */
 static const char *colors[][3] = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = {termcol0, termcol0, termcol0},
-	[SchemeSel] = {termcol0, termcol9, termcol0},
+	[SchemeSel] = {termcol0, termcol0, termcol10},
 	[SchemeStatus] = {termcol3, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel] = {termcol9, termcol0, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm] = {termcol3, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -45,7 +48,7 @@ static const char *const autostart[] = {
 };
 
 /* tagging */
-static const char *tags[] = {"", "", "", "", "", "ﴼ", "", ""};
+static const char *tags[] = {"", "󰏆", "", "", "", "ﴼ", "", ""};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -81,16 +84,17 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact = 0.5;		 /* factor of master area size [0.05..0.95] */
+static const float mfact = 0.6;		 /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;		 /* number of clients in master area */
 static const int resizehints = 1;	 /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{"[T]", tile}, /* first entry is default */
-	{"[F]", NULL}, /* no layout function means floating behavior */
-	{"[M]", monocle},
+	{"﬿", tile}, /* first entry is default */
+	{"F", NULL}, /* no layout function means floating behavior */
+	{"M", monocle},
+    {"﩯", magicgrid},
 };
 
 /* key definitions */
@@ -112,7 +116,7 @@ static const Layout layouts[] = {
 
 /* custom commands*/
 // static const char *browsercmd[] = {"firefox", NULL};
-static const char *browsercmd[] = {"firefox", NULL};
+static const char *browsercmd[] = {"google-chrome-stable", NULL};
 static const char *filemanager[] = {"pcmanfm", NULL};
 static const char *lockcmd[] = {"slock", NULL};
 static const char *upvolcmd[] = {"/home/volta/suckless/scripts/vol-up.sh", NULL};
@@ -122,13 +126,12 @@ static const char *upbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-u
 static const char *downbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-down.sh", NULL};
 static const char *screenshotcmd[] = {"/home/volta/suckless/scripts/screenshot.sh", NULL};
 static const char *wpchangecmd[] = {"/home/volta/suckless/scripts/wp-change.sh", NULL};
-static const char *xdisplaycmd[] = {"/home/volta/suckless/scripts/xdisplay.sh", NULL};
 /* commands */
 static const char *dmenucmd[] = {"dmenu_run", NULL};
 static const char *termcmd[] = {"st", NULL};
 
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "56x15", NULL};
+static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "65x15", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -142,7 +145,6 @@ static const Key keys[] = {
 	{MODKEY, XK_F11, spawn, {.v = downbacklightcmd}},
 	{MODKEY, XK_w, spawn, {.v = wpchangecmd}},
 	{NULL, XK_Print, spawn, {.v = screenshotcmd}},
-	{MODKEY | ShiftMask, XK_x, spawn, {.v = xdisplaycmd}},
 	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
 	{MODKEY, XK_Return, spawn, {.v = termcmd}},
 	{MODKEY, XK_apostrophe, togglescratch, {.v = scratchpadcmd}},
@@ -161,6 +163,7 @@ static const Key keys[] = {
 	{MODKEY | ShiftMask, XK_t, setlayout, {.v = &layouts[0]}},
 	{MODKEY | ShiftMask, XK_f, setlayout, {.v = &layouts[1]}},
 	{MODKEY | ShiftMask, XK_m, setlayout, {.v = &layouts[2]}},
+	{MODKEY | ShiftMask, XK_g, setlayout, {.v = &layouts[3]}},
 	{MODKEY, XK_f, fullscreen, {0}},
 	{MODKEY, XK_space, setlayout, {0}},
 	{MODKEY | ShiftMask, XK_space, togglefloating, {0}},

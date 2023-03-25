@@ -5,7 +5,7 @@ bash -c '~/suckless/scripts/inverse-scroll.sh &'
 bash -c '~/suckless/scripts/wp-change.sh &'
 #bash -c  '~/suckless/scripts/dynamic_wallpaper.sh &'
 
-arr=("dwmblocks" "redshift" "cfw" "copyq" "nm-applet" "picom -b" "fcitx5")
+arr=("dwmblocks" "redshift" "cfw" "copyq" "nm-applet" "picom" "fcitx5")
 
 for value in ${arr[@]}; do
     isExist=$(ps -ef | grep $value | grep -v grep | wc -l)
