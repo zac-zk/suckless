@@ -3,9 +3,9 @@
 /* appearance */
 static const unsigned int borderpx = 2;		  /* border pixel of windows */
 static const unsigned int gappx = 10;		  /* gap pixel between windows */
-static int gappi = 12;                         /* 窗口与窗口 缝隙大小 */
-static int gappo = 12;                         /* 窗口与边缘 缝隙大小 */
-static const int newclientathead = 0;          /* 定义新窗口在栈顶还是栈底 */
+static int gappi = 12;						  /* 窗口与窗口 缝隙大小 */
+static int gappo = 12;						  /* 窗口与边缘 缝隙大小 */
+static const int newclientathead = 0;		  /* 定义新窗口在栈顶还是栈底 */
 static const unsigned int snap = 32;		  /* snap pixel */
 static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;  /* 0: systray in the right corner, >0: systray on left of status text */
@@ -48,7 +48,14 @@ static const char *const autostart[] = {
 };
 
 /* tagging */
-static const char *tags[] = {"", "󰏆", "", "", "", "ﴼ", "", ""};
+static const char *tags[] = {"", "󰏆", "", "", "ﴼ", "", ""};
+static const int browser = 1;
+static const int office = 1 << 1;
+static const int editor = 1 << 2;
+static const int music = 1 << 3;
+static const int video = 1 << 4;
+static const int picture = 1 << 5;
+static const int virtualmachine = 1 << 6;
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -60,27 +67,34 @@ static const Rule rules[] = {
 	{"Wine", NULL, NULL, 0, 1, -1},
 	{"wemeetapp", NULL, NULL, 0, 1, -1},
 	{"zoom", NULL, NULL, 0, 1, -1},
-	{"Microsoft-edge-dev", NULL, NULL, 1, 0, -1},
-	{"firefox", NULL, NULL, 1, 0, -1},
-	{"Google-chrome", NULL, NULL, 1, 0, -1},
-	{"Chromium", NULL, NULL, 1, 0, -1},
-	{"wpp", NULL, NULL, 1 << 1, 0, -1},
-	{"wps", NULL, NULL, 1 << 1, 0, -1},
-	{"pdf", NULL, NULL, 1 << 1, 0, -1},
-	{"et", NULL, NULL, 1 << 1, 0, -1},
-	{"Foxit Reader", NULL, NULL, 1 << 1, 0, -1},
-	{"Code", NULL, NULL, 1 << 2, 0, -1},
-	{"VSCodium", NULL, NULL, 1 << 2, 0, -1},
-	{"jetbrains-studio", NULL, NULL, 1 << 2, 0, -1},
-	{"jetbrains-idea", NULL, NULL, 1 << 2, 0, -1},
-	{"Pcmanfm", NULL, NULL, 1 << 3, 0, -1},
-	{"Gimp-2.10", NULL, NULL, 1 << 4, 0, -1},
-	{"vlc", NULL, NULL, 1 << 5, 0, -1},
-	{"bomi", NULL, NULL, 1 << 5, 0, -1},
-	{"smplayer", NULL, NULL, 1 << 5, 0, -1},
-	{"mpv", NULL, NULL, 1 << 5, 0, -1},
-	{"yesplaymusic", NULL, NULL, 1 << 6, 0, -1},
-	{"VirtualBox Manager", NULL, NULL, 1 << 7, 1, -1},
+	{"Pcmanfm", NULL, NULL, 0, 1, -1},
+
+	{"Microsoft-edge-dev", NULL, NULL, browser, 0, -1},
+	{"firefox", NULL, NULL, browser, 0, -1},
+	{"Google-chrome", NULL, NULL, browser, 0, -1},
+	{"Chromium", NULL, NULL, browser, 0, -1},
+
+	{"wpp", NULL, NULL, office, 0, -1},
+	{"wps", NULL, NULL, office, 0, -1},
+	{"pdf", NULL, NULL, office, 0, -1},
+	{"et", NULL, NULL, office, 0, -1},
+	{"Foxit Reader", NULL, NULL, office, 0, -1},
+
+	{"Code", NULL, NULL, editor, 0, -1},
+	{"VSCodium", NULL, NULL, editor, 0, -1},
+	{"jetbrains-studio", NULL, NULL, editor, 0, -1},
+	{"jetbrains-idea", NULL, NULL, editor, 0, -1},
+
+	{"yesplaymusic", NULL, NULL, music, 0, -1},
+
+	{"vlc", NULL, NULL, video, 0, -1},
+	{"bomi", NULL, NULL, video, 0, -1},
+	{"smplayer", NULL, NULL, video, 0, -1},
+	{"mpv", NULL, NULL, video, 0, -1},
+
+	{"Gimp-2.10", NULL, NULL, picture, 0, -1},
+
+	{"VirtualBox Manager", NULL, NULL, virtualmachine, 1, -1},
 };
 
 /* layout(s) */
@@ -92,9 +106,9 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{"﬿", tile}, /* first entry is default */
-	{"F", NULL}, /* no layout function means floating behavior */
+	{"F", NULL},   /* no layout function means floating behavior */
 	{"M", monocle},
-    {"﩯", magicgrid},
+	{"﩯", magicgrid},
 };
 
 /* key definitions */

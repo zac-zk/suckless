@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"string_view": "c",
+		"limits": "c",
+		"sstream": "c",
+		"*.inc": "c"
+	}
+}
