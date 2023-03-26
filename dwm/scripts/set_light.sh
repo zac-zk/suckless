@@ -5,7 +5,5 @@ case $1 in
     down) xbacklight -dec 10 ;;
 esac
 
-echo $DWM
-
 bash $DWM/statusbar/statusbar.sh update light
 bash $DWM/statusbar/packages/light.sh notify 
