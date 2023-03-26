@@ -90,6 +90,7 @@ static const Rule rules[] = {
     {"Chromium", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                    // Chromium   tag -> 
     {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                     // chrome     tag -> 
     {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},                       // music      tag ->  浮动、无边框
+    {"feh", NULL, NULL, 0, 1, 0, 1,-1,0},
     {NULL, "qq", NULL, 1 << 6, 0, 0, 1, -1, 0},                          // qq  无边框
     {NULL, "wechat.exe", NULL, 0, 0, 0, 1, -1, 0},                       // wechat无边框
     {NULL, "wxwork.exe", NULL, 0, 0, 0, 1, -1, 0},                       // workwechat 无边框
