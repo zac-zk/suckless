@@ -18,6 +18,7 @@ daemons() {
     kill copyq ; copyq &
     kill cfw ; cfw &
     kill nm-applet ; nm-applet &
+    kill redshift ; redshift &
 }
 
 cron() {
