@@ -21,8 +21,8 @@ static const int nmaster = 1;                  /* 主工作区 窗口数量 */
 static const unsigned int snap = 10;           /* 边缘依附宽度 */
 static const unsigned int baralpha = 0xc0;     /* 状态栏透明度 */
 static const unsigned int borderalpha = 0xdd;  /* 边框透明度 */
-static const char *fonts[] = {"Iosevka Custom:size=13:antialias=true:autohint=true",
-                              "WenQuanYi Micro Hei:size=13:antialias=true:autohint=true",
+static const char *fonts[] = {"Iosevka Custom:size=15:antialias=true:autohint=true",
+                              "WenQuanYi Micro Hei:size=15:antialias=true:autohint=true",
                               "Symbols Nerd Font:pixelsize=24:type=1000-em:antialias=true:autohint=true"};
 static const char *colors[][3] = {
     /* 颜色设置 ColFg, ColBg, ColBorder */
