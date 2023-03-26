@@ -9,10 +9,10 @@ static const char *fonts[] = {
 static const char *prompt = NULL;	 /* -p  option; prompt to the left of input field */
 static char termcol0[] = "#282a36";	 /* Background   */
 static char termcol1[] = "#44475a";	 /* Current Line     */
-static char termcol2[] = "#44475a";	 /* Selection   */
-static char termcol3[] = "#f8f8f2";	 /* Foreground  */
+static char termcol2[] = "#333333";	 /* Selection   */
+static char termcol3[] = "#ffffff";	 /* Foreground  */
 static char termcol4[] = "#6272a4";	 /* Comment    */
-static char termcol5[] = "#8be9fd";	 /* Cyan    */
+static char termcol5[] = "#A6D8DF";	 /* Cyan    */
 static char termcol6[] = "#50fa7b";	 /* Green    */
 static char termcol7[] = "#ffb86c";	 /* Orange    */
 static char termcol8[] = "#ff79c6";	 /* Pink    */
@@ -21,10 +21,10 @@ static char termcol10[] = "#ff5555"; /* Red    */
 static char termcol11[] = "#f1fa8c"; /* Yellow    */
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
-	[SchemeNorm] = {termcol3, termcol0},
-	[SchemeSel] = {termcol9, termcol0},
+	[SchemeNorm] = {termcol3, termcol2},
+	[SchemeSel] = {termcol3, termcol2},
 	[SchemeSelHighlight] = {termcol9, termcol2},
-	[SchemeNormHighlight] = {termcol3, termcol0},
+	[SchemeNormHighlight] = {termcol3, termcol2},
 	[SchemeOut] = {"#000000", "#00ffff"},
 	[SchemeOutHighlight] = {termcol3, "#00ffff"},
 };
