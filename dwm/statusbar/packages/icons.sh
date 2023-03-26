@@ -4,7 +4,7 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_icons
-color="^c#2D1B46^^b#5555660x66^"
+color="^c#2D1B46^^b#99CCFF0x88^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {

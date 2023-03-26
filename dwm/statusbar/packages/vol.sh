@@ -7,8 +7,8 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_vol
-icon_color="^c#442266^^b#7879560x88^"
-text_color="^c#442266^^b#7879560x99^"
+icon_color="^c#442266^^b#CCFFCC0x88^"
+text_color="^c#442266^^b#CCFFCC0x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 # check

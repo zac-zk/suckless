@@ -12,19 +12,19 @@ static char termcol1[] = "#44475a";	 /* Current Line     */
 static char termcol2[] = "#333333";	 /* Selection   */
 static char termcol3[] = "#ffffff";	 /* Foreground  */
 static char termcol4[] = "#6272a4";	 /* Comment    */
-static char termcol5[] = "#A6D8DF";	 /* Cyan    */
+static char termcol5[] = "#99CCCC";	 /* Cyan    */
 static char termcol6[] = "#50fa7b";	 /* Green    */
 static char termcol7[] = "#ffb86c";	 /* Orange    */
 static char termcol8[] = "#ff79c6";	 /* Pink    */
-static char termcol9[] = "#bd93f9";	 /* Purple    */
+static char termcol9[] = "#666699";	 /* Purple    */
 static char termcol10[] = "#ff5555"; /* Red    */
 static char termcol11[] = "#f1fa8c"; /* Yellow    */
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
-	[SchemeNorm] = {termcol3, termcol2},
-	[SchemeSel] = {termcol3, termcol2},
-	[SchemeSelHighlight] = {termcol9, termcol2},
-	[SchemeNormHighlight] = {termcol3, termcol2},
+	[SchemeNorm] = {termcol3, termcol5},
+	[SchemeSel] = {termcol3, termcol5},
+	[SchemeSelHighlight] = {termcol9, termcol5},
+	[SchemeNormHighlight] = {termcol3, termcol5},
 	[SchemeOut] = {"#000000", "#00ffff"},
 	[SchemeOutHighlight] = {termcol3, "#00ffff"},
 };

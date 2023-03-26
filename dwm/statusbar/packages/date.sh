@@ -4,8 +4,8 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_date
-icon_color="^c#4B005B^^b#7E51680x88^"
-text_color="^c#4B005B^^b#7E51680x99^"
+icon_color="^c#4B005B^^b#CCFF990x88^"
+text_color="^c#4B005B^^b#CCFF990x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {

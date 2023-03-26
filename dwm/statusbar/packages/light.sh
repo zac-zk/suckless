@@ -5,8 +5,8 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_light
-icon_color="^c#3B001B^^b#427497CBx88^"
-text_color="^c#3B001B^^b#427497CBx99^"
+icon_color="^c#3B001B^^b#99CCCC0x88^"
+text_color="^c#3B001B^^b#99CCCC0x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 get_by_xbacklight() {
