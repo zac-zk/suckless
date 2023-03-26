@@ -1,216 +1,241 @@
-/* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
-/* appearance */
-static const unsigned int borderpx = 2;		  /* border pixel of windows */
-static const unsigned int gappx = 10;		  /* gap pixel between windows */
-static int gappi = 12;						  /* 窗口与窗口 缝隙大小 */
-static int gappo = 12;						  /* 窗口与边缘 缝隙大小 */
-static const int newclientathead = 0;		  /* 定义新窗口在栈顶还是栈底 */
-static const unsigned int snap = 32;		  /* snap pixel */
-static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;  /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2; /* systray spacing */
-static const int systraypinningfailfirst = 1; /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray = 1;			  /* 0 means no systray */
-static const int showbar = 1;				  /* 0 means no bar */
-static const int topbar = 1;				  /* 0 means bottom bar */
-static const char *fonts[] = {"Iosevka Custom:size=15:antialias=true:autohint=true",
-							  "WenQuanYi Micro Hei:size=15:antialias=true:autohint=true",
-							  "Symbols Nerd Font:pixelsize=24:type=1000-em:antialias=true:autohint=true"};
-
-static char termcol0[] = "#282a36";	 /* Background   */
-static char termcol1[] = "#44475a";	 /* Current Line     */
-static char termcol2[] = "#44475a";	 /* Selection   */
-static char termcol3[] = "#f8f8f2";	 /* Foreground  */
-static char termcol4[] = "#6272a4";	 /* Comment    */
-static char termcol5[] = "#8be9fd";	 /* Cyan    */
-static char termcol6[] = "#50fa7b";	 /* Green    */
-static char termcol7[] = "#ffb86c";	 /* Orange    */
-static char termcol8[] = "#ff79c6";	 /* Pink    */
-static char termcol9[] = "#bd93f9";	 /* Purple    */
-static char termcol10[] = "#ff5555"; /* Red    */
-static char termcol11[] = "#f1fa8c"; /* Yellow    */
-
+static int showsystray = 1;                    /* 是否显示托盘栏 */
+static const int newclientathead = 0;          /* 定义新窗口在栈顶还是栈底 */
+static const unsigned int borderpx = 2;        /* 窗口边框大小 */
+static const unsigned int systraypinning = 1;  /* 托盘跟随的显示器 0代表不指定显示器 */
+static const unsigned int systrayspacing = 1;  /* 托盘间距 */
+static const unsigned int systrayspadding = 5; /* 托盘和状态栏的间隙 */
+static int gappi = 12;                         /* 窗口与窗口 缝隙大小 */
+static int gappo = 12;                         /* 窗口与边缘 缝隙大小 */
+static const int _gappo = 12;                  /* 窗口与窗口 缝隙大小 不可变 用于恢复时的默认值 */
+static const int _gappi = 12;                  /* 窗口与边缘 缝隙大小 不可变 用于恢复时的默认值 */
+static const int vertpad = 5;                  /* vertical padding of bar */
+static const int sidepad = 5;                  /* horizontal padding of bar */
+static const int overviewgappi = 24;           /* overview时 窗口与边缘 缝隙大小 */
+static const int overviewgappo = 60;           /* overview时 窗口与窗口 缝隙大小 */
+static const int showbar = 1;                  /* 是否显示状态栏 */
+static const int topbar = 1;                   /* 指定状态栏位置 0底部 1顶部 */
+static const float mfact = 0.6;                /* 主工作区 大小比例 */
+static const int nmaster = 1;                  /* 主工作区 窗口数量 */
+static const unsigned int snap = 10;           /* 边缘依附宽度 */
+static const unsigned int baralpha = 0xc0;     /* 状态栏透明度 */
+static const unsigned int borderalpha = 0xdd;  /* 边框透明度 */
+static const char *fonts[] = {"Iosevka Custom:size=13:antialias=true:autohint=true",
+                              "WenQuanYi Micro Hei:size=13:antialias=true:autohint=true",
+                              "Symbols Nerd Font:pixelsize=24:type=1000-em:antialias=true:autohint=true"};
 static const char *colors[][3] = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = {termcol0, termcol0, termcol0},
-	[SchemeSel] = {termcol0, termcol0, termcol10},
-	[SchemeStatus] = {termcol3, termcol0, "#000000"},	// Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel] = {termcol9, termcol0, "#000000"},	// Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm] = {termcol3, termcol0, "#000000"}, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel] = {termcol9, termcol2, "#000000"},	// infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm] = {termcol3, termcol0, "#000000"}, // infobar middle  unselected {text,background,not used but cannot be empty}
+    /* 颜色设置 ColFg, ColBg, ColBorder */
+    [SchemeNorm] = {"#bbbbbb", "#333333", "#444444"},
+    [SchemeSel] = {"#ffffff", "#37474F", "#42A5F5"},
+    [SchemeSelGlobal] = {"#ffffff", "#37474F", "#FFC0CB"},
+    [SchemeHid] = {"#dddddd", NULL, NULL},
+    [SchemeSystray] = {NULL, "#7799AA", NULL},
+    [SchemeUnderline] = {"#7799AA", NULL, NULL},
+    [SchemeNormTag] = {"#bbbbbb", "#333333", NULL},
+    [SchemeSelTag] = {"#eeeeee", "#333333", NULL},
+    [SchemeBarEmpty] = {NULL, "#111111", NULL},
+};
+static const unsigned int alphas[][3] = {
+    /* 透明度设置 ColFg, ColBg, ColBorder */
+    [SchemeNorm] = {OPAQUE, baralpha, borderalpha},
+    [SchemeSel] = {OPAQUE, baralpha, borderalpha},
+    [SchemeSelGlobal] = {OPAQUE, baralpha, borderalpha},
+    [SchemeNormTag] = {OPAQUE, baralpha, borderalpha},
+    [SchemeSelTag] = {OPAQUE, baralpha, borderalpha},
+    [SchemeBarEmpty] = {NULL, 0xa0a, NULL},
+    [SchemeStatusText] = {OPAQUE, 0x88, NULL},
 };
 
-static const char *const autostart[] = {
-	"bash", "-c", "/home/volta/suckless/scripts/autostart.sh", NULL,
-	NULL /* terminate */
-};
+/* 自定义脚本位置 */
+static const char *autostartscript = "$DWM/scripts/autostart.sh";
+static const char *statusbarscript = "$DWM/statusbar/statusbar.sh";
 
-/* tagging */
-static const char *tags[] = {"", "󰏆", "", "", "ﴼ", "", ""};
-static const int browser = 1;
-static const int office = 1 << 1;
-static const int editor = 1 << 2;
-static const int music = 1 << 3;
-static const int video = 1 << 4;
-static const int picture = 1 << 5;
-static const int virtualmachine = 1 << 6;
-
-static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{"GoldenDict", NULL, NULL, 0, 1, -1},
-	{"Wine", NULL, NULL, 0, 1, -1},
-	{"wemeetapp", NULL, NULL, 0, 1, -1},
-	{"zoom", NULL, NULL, 0, 1, -1},
-	{"Pcmanfm", NULL, NULL, 0, 1, -1},
-
-	{"Microsoft-edge-dev", NULL, NULL, browser, 0, -1},
-	{"firefox", NULL, NULL, browser, 0, -1},
-	{"Google-chrome", NULL, NULL, browser, 0, -1},
-	{"Chromium", NULL, NULL, browser, 0, -1},
-
-	{"wpp", NULL, NULL, office, 0, -1},
-	{"wps", NULL, NULL, office, 0, -1},
-	{"pdf", NULL, NULL, office, 0, -1},
-	{"et", NULL, NULL, office, 0, -1},
-	{"Foxit Reader", NULL, NULL, office, 0, -1},
-
-	{"Code", NULL, NULL, editor, 0, -1},
-	{"VSCodium", NULL, NULL, editor, 0, -1},
-	{"jetbrains-studio", NULL, NULL, editor, 0, -1},
-	{"jetbrains-idea", NULL, NULL, editor, 0, -1},
-
-	{"yesplaymusic", NULL, NULL, music, 0, -1},
-
-	{"vlc", NULL, NULL, video, 0, -1},
-	{"bomi", NULL, NULL, video, 0, -1},
-	{"smplayer", NULL, NULL, video, 0, -1},
-	{"mpv", NULL, NULL, video, 0, -1},
-
-	{"Gimp-2.10", NULL, NULL, picture, 0, -1},
-
-	{"VirtualBox Manager", NULL, NULL, virtualmachine, 1, -1},
-};
-
-/* layout(s) */
-static const float mfact = 0.6;		 /* factor of master area size [0.05..0.95] */
-static const int nmaster = 1;		 /* number of clients in master area */
-static const int resizehints = 1;	 /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
-
-static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{"﬿", tile}, /* first entry is default */
-	{"F", NULL},   /* no layout function means floating behavior */
-	{"M", monocle},
-	{"﩯", magicgrid},
-};
-
-/* key definitions */
-#define MODKEY Mod4Mask
-#define TAGKEYS(KEY, TAG)                                          \
-	{MODKEY, KEY, view, {.ui = 1 << TAG}},                         \
-		{MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}}, \
-		{MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},          \
-		{MODKEY | ControlMask | ShiftMask, KEY, toggletag, {.ui = 1 << TAG}},
-
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd)                     \
-	{                                  \
-		.v = (const char *[])          \
-		{                              \
-			"/bin/sh", "-c", cmd, NULL \
-		}                              \
-	}
-
-/* custom commands*/
-// static const char *browsercmd[] = {"firefox", NULL};
-static const char *browsercmd[] = {"google-chrome-stable", NULL};
-static const char *filemanager[] = {"pcmanfm", NULL};
-static const char *lockcmd[] = {"slock", NULL};
-static const char *upvolcmd[] = {"/home/volta/suckless/scripts/vol-up.sh", NULL};
-static const char *downvolcmd[] = {"/home/volta/suckless/scripts/vol-down.sh", NULL};
-static const char *mutevolcmd[] = {"/home/volta/suckless/scripts/vol-toggle.sh", NULL};
-static const char *upbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-up.sh", NULL};
-static const char *downbacklightcmd[] = {"/home/volta/suckless/scripts/backlight-down.sh", NULL};
-static const char *screenshotcmd[] = {"/home/volta/suckless/scripts/screenshot.sh", NULL};
-static const char *wpchangecmd[] = {"/home/volta/suckless/scripts/wp-change.sh", NULL};
-/* commands */
-static const char *dmenucmd[] = {"dmenu_run", NULL};
-static const char *termcmd[] = {"st", NULL};
-
+/* 自定义 scratchpad instance */
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = {"st", "-t", scratchpadname, "-g", "65x15", NULL};
 
-static const Key keys[] = {
-	/* modifier                     key        function        argument */
-	{MODKEY, XK_c, spawn, {.v = browsercmd}},
-	{MODKEY, XK_e, spawn, {.v = filemanager}},
-	{MODKEY | ShiftMask, XK_l, spawn, {.v = lockcmd}},
-	{MODKEY, XK_F3, spawn, {.v = upvolcmd}},
-	{MODKEY, XK_F2, spawn, {.v = downvolcmd}},
-	{MODKEY, XK_F1, spawn, {.v = mutevolcmd}},
-	{MODKEY, XK_F12, spawn, {.v = upbacklightcmd}},
-	{MODKEY, XK_F11, spawn, {.v = downbacklightcmd}},
-	{MODKEY, XK_w, spawn, {.v = wpchangecmd}},
-	{NULL, XK_Print, spawn, {.v = screenshotcmd}},
-	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
-	{MODKEY, XK_Return, spawn, {.v = termcmd}},
-	{MODKEY, XK_apostrophe, togglescratch, {.v = scratchpadcmd}},
-	{MODKEY, XK_b, togglebar, {0}},
-	{MODKEY | ShiftMask, XK_j, rotatestack, {.i = +1}},
-	{MODKEY | ShiftMask, XK_k, rotatestack, {.i = -1}},
-	{MODKEY, XK_j, focusstack, {.i = +1}},
-	{MODKEY, XK_k, focusstack, {.i = -1}},
-	{MODKEY, XK_o, incnmaster, {.i = +1}},
-	{MODKEY, XK_p, incnmaster, {.i = -1}},
-	{MODKEY, XK_h, setmfact, {.f = -0.05}},
-	{MODKEY, XK_l, setmfact, {.f = +0.05}},
-	{MODKEY | ShiftMask, XK_Return, zoom, {0}},
-	{MODKEY, XK_Tab, view, {0}},
-	{MODKEY | ShiftMask, XK_q, killclient, {0}},
-	{MODKEY | ShiftMask, XK_t, setlayout, {.v = &layouts[0]}},
-	{MODKEY | ShiftMask, XK_f, setlayout, {.v = &layouts[1]}},
-	{MODKEY | ShiftMask, XK_m, setlayout, {.v = &layouts[2]}},
-	{MODKEY | ShiftMask, XK_g, setlayout, {.v = &layouts[3]}},
-	{MODKEY, XK_f, fullscreen, {0}},
-	{MODKEY, XK_space, setlayout, {0}},
-	{MODKEY | ShiftMask, XK_space, togglefloating, {0}},
-	{MODKEY, XK_0, view, {.ui = ~0}},
-	{MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
-	{MODKEY, XK_comma, focusmon, {.i = -1}},
-	{MODKEY, XK_period, focusmon, {.i = +1}},
-	{MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
-	{MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
-	TAGKEYS(XK_1, 0)
-		TAGKEYS(XK_2, 1)
-			TAGKEYS(XK_3, 2)
-				TAGKEYS(XK_4, 3)
-					TAGKEYS(XK_5, 4)
-						TAGKEYS(XK_6, 5)
-							TAGKEYS(XK_7, 6)
-								TAGKEYS(XK_8, 7)
-									TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_c, quit, {0}},
+/* 自定义tag名称 */
+/* 自定义特定实例的显示状态 */
+//            ﮸  ﭮ 切
+static const char *tags[] = {
+    "", // tag:0  key:1  desc:terminal1
+    "", // tag:1  key:2  desc:terminal2
+    "", // tag:2  key:3  desc:terminal3
+    "", // tag:3  key:4  desc:terminal4
+    "", // tag:4  key:5  desc:terminal5
+    "", // tag:5  key:6  desc:terminal6
+    "", // tag:6  key:7  desc:terminal7
+    "", // tag:7  key:c  desc:browser
+    "", // tag:8  key:m  desc:music
+    "", // tag 9  key:v  desc:virtualmachine
 };
 
-/* button definitions */
-/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static const Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ClkTagBar, MODKEY, Button1, tag, {0}},
-	{ClkTagBar, MODKEY, Button3, toggletag, {0}},
-	{ClkWinTitle, 0, Button2, zoom, {0}},
-	{ClkStatusText, 0, Button2, spawn, {.v = termcmd}},
-	{ClkClientWin, MODKEY, Button1, movemouse, {0}},
-	{ClkClientWin, MODKEY, Button2, togglefloating, {0}},
-	{ClkClientWin, MODKEY, Button3, resizemouse, {0}},
-	{ClkTagBar, 0, Button1, view, {0}},
-	{ClkTagBar, 0, Button3, toggleview, {0}},
-	{ClkTagBar, MODKEY, Button1, tag, {0}},
-	{ClkTagBar, MODKEY, Button3, toggletag, {0}},
+/* 自定义窗口显示规则 */
+/* class instance title 主要用于定位窗口适合哪个规则 */
+/* tags mask 定义符合该规则的窗口的tag 0 表示当前tag */
+/* isfloating 定义符合该规则的窗口是否浮动 */
+/* isglobal 定义符合该规则的窗口是否全局浮动 */
+/* isnoborder 定义符合该规则的窗口是否无边框 */
+/* monitor 定义符合该规则的窗口显示在哪个显示器上 -1 为当前屏幕 */
+/* floatposition 定义符合该规则的窗口显示的位置 0 中间，1到9分别为9宫格位置，例如1左上，9右下，3右上 */
+static const Rule rules[] = {
+    /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor floatposition */
+    /** 优先级高 越在上面优先度越高 */
+    {NULL, NULL, "图片查看器", 0, 1, 0, 0, -1, 0}, // qq图片查看器        浮动
+    {NULL, NULL, "图片查看", 0, 1, 0, 0, -1, 0},   // 微信图片查看器      浮动
+
+    /** 普通优先度 */
+    {"obs", NULL, NULL, 1 << 3, 0, 0, 0, -1, 0},                         // obs        tag -> 󰕧
+    {"chrome", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                      // chrome     tag -> 
+    {"Chromium", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                    // Chromium   tag -> 
+    {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                     // chrome     tag -> 
+    {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},                       // music      tag ->  浮动、无边框
+    {NULL, "qq", NULL, 1 << 6, 0, 0, 1, -1, 0},                          // qq  无边框
+    {NULL, "wechat.exe", NULL, 0, 0, 0, 1, -1, 0},                       // wechat无边框
+    {NULL, "wxwork.exe", NULL, 0, 0, 0, 1, -1, 0},                       // workwechat 无边框
+    {"Vncviewer", NULL, NULL, 0, 1, 0, 1, -1, 2},                        // Vncviewer           浮动、无边框 屏幕顶部
+    {"flameshot", NULL, NULL, 0, 1, 0, 0, -1, 0},                        // 火焰截图            浮动
+    {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
+    {"Pcmanfm", NULL, NULL, 0, 1, 0, 1, -1, 3},                          // pcmanfm             浮动、无边框 右上角
+    {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+
+    /** 部分特殊class的规则 */
+    {"float", NULL, NULL, 0, 1, 0, 0, -1, 0},        // class = float       浮动
+    {"global", NULL, NULL, TAGMASK, 0, 1, 0, -1, 0}, // class = gloabl      全局
+    {"noborder", NULL, NULL, 0, 0, 0, 1, -1, 0},     // class = noborder    无边框
+    {"FGN", NULL, NULL, TAGMASK, 1, 1, 1, -1, 0},    // class = FGN         浮动、全局、无边框
+    {"FG", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},     // class = FG          浮动、全局
+    {"FN", NULL, NULL, 0, 1, 0, 1, -1, 0},           // class = FN          浮动、无边框
+    {"GN", NULL, NULL, TAGMASK, 0, 1, 1, -1, 0},     // CLASS = GN          全局、无边框
+
+    /** 优先度低 越在上面优先度越低 */
+    {NULL, NULL, "crx_", 0, 1, 0, 0, -1, 0},   // 错误载入时 会有crx_ 浮动
+    {NULL, NULL, "broken", 0, 1, 0, 0, -1, 0}, // 错误载入时 会有broken 浮动
+};
+static const char *overviewtag = "OVERVIEW";
+static const Layout overviewlayout = {"舘", overview};
+
+/* 自定义布局 */
+static const Layout layouts[] = {
+    {"﬿", tile},      /* 主次栈 */
+    {"﩯", magicgrid}, /* 网格 */
+};
+
+#define SHCMD(cmd)                     \
+    {                                  \
+        .v = (const char *[])          \
+        {                              \
+            "/bin/sh", "-c", cmd, NULL \
+        }                              \
+    }
+#define MODKEY Mod4Mask
+#define TAGKEYS(KEY, TAG, cmd)                            \
+    {MODKEY, KEY, view, {.ui = 1 << TAG, .v = cmd}},      \
+        {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}}, \
+        {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},
+
+static Key keys[] = {
+    /* modifier            key              function          argument */
+    {MODKEY, XK_equal, togglesystray, {0}}, /* super +            |  切换 托盘栏显示状态 */
+
+    {MODKEY, XK_a, toggleoverview, {0}}, /* super a            |  显示所有tag 或 跳转到聚焦窗口的tag */
+
+    {MODKEY, XK_comma, setmfact, {.f = -0.05}},  /* super ,            |  缩小主工作区 */
+    {MODKEY, XK_period, setmfact, {.f = +0.05}}, /* super .            |  放大主工作区 */
+
+    {MODKEY, XK_i, hidewin, {0}},                /* super i            |  隐藏 窗口 */
+    {MODKEY | ShiftMask, XK_i, restorewin, {0}}, /* super shift i      |  取消隐藏 窗口 */
+
+    {MODKEY | ShiftMask, XK_Return, zoom, {0}}, /* super shift enter  |  将当前聚焦窗口置为主窗口 */
+
+    {MODKEY, XK_t, togglefloating, {0}},                /* super t            |  开启/关闭 聚焦目标的float模式 */
+    {MODKEY | ShiftMask, XK_f, toggleallfloating, {0}}, /* super shift f      |  开启/关闭 全部目标的float模式 */
+    {MODKEY, XK_f, fullscreen, {0}},                    /* super f            |  开启/关闭 全屏 */
+    {MODKEY | ShiftMask, XK_b, togglebar, {0}},         /* super shift f      |  开启/关闭 状态栏 */
+    {MODKEY, XK_g, toggleglobal, {0}},                  /* super g            |  开启/关闭 全局 */
+    {MODKEY, XK_u, toggleborder, {0}},                  /* super u            |  开启/关闭 边框 */
+    {MODKEY | ShiftMask, XK_e, incnmaster, {.i = +1}},  /* super e            |  改变主工作区窗口数量 (1 2中切换) */
+
+    {MODKEY, XK_b, focusmon, {.i = +1}},           /* super b            |  光标移动到另一个显示器 */
+    {MODKEY | ShiftMask, XK_b, tagmon, {.i = +1}}, /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+
+    {MODKEY, XK_q, killclient, {0}},                    /* super q            |  关闭窗口 */
+    {MODKEY | ControlMask, XK_q, forcekillclient, {0}}, /* super ctrl q       |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
+
+    {MODKEY | ControlMask, XK_F12, quit, {0}}, /* super ctrl f12     |  退出dwm */
+
+    {MODKEY | ShiftMask, XK_space, selectlayout, {.v = &layouts[1]}}, /* super shift g  |  切换到grid布局 */
+    {MODKEY, XK_o, showonlyorall, {0}},                               /* super o            |  切换 只显示一个窗口 / 全部显示 */
+
+    {MODKEY | ControlMask, XK_equal, setgap, {.i = -6}}, /* super ctrl +       |  窗口增大 */
+    {MODKEY | ControlMask, XK_minus, setgap, {.i = +6}}, /* super ctrl -       |  窗口减小 */
+    {MODKEY | ControlMask, XK_space, setgap, {.i = 0}},  /* super ctrl space   |  窗口重置 */
+
+    {MODKEY | ControlMask, XK_Up, movewin, {.ui = UP}},       /* super ctrl up      |  移动窗口 */
+    {MODKEY | ControlMask, XK_Down, movewin, {.ui = DOWN}},   /* super ctrl down    |  移动窗口 */
+    {MODKEY | ControlMask, XK_Left, movewin, {.ui = LEFT}},   /* super ctrl left    |  移动窗口 */
+    {MODKEY | ControlMask, XK_Right, movewin, {.ui = RIGHT}}, /* super ctrl right   |  移动窗口 */
+
+    {MODKEY | Mod1Mask, XK_Up, resizewin, {.ui = V_REDUCE}},    /* super alt up       |  调整窗口 */
+    {MODKEY | Mod1Mask, XK_Down, resizewin, {.ui = V_EXPAND}},  /* super alt down     |  调整窗口 */
+    {MODKEY | Mod1Mask, XK_Left, resizewin, {.ui = H_REDUCE}},  /* super alt left     |  调整窗口 */
+    {MODKEY | Mod1Mask, XK_Right, resizewin, {.ui = H_EXPAND}}, /* super alt right    |  调整窗口 */
+
+    {MODKEY, XK_k, focusdir, {.i = UP}},                       /* super k            | 二维聚焦窗口 */
+    {MODKEY, XK_j, focusdir, {.i = DOWN}},                     /* super j            | 二维聚焦窗口 */
+    {MODKEY, XK_h, focusdir, {.i = LEFT}},                     /* super h            | 二维聚焦窗口 */
+    {MODKEY, XK_l, focusdir, {.i = RIGHT}},                    /* super l            | 二维聚焦窗口 */
+    {MODKEY | ShiftMask, XK_k, exchange_client, {.i = UP}},    /* super shift k      | 二维交换窗口 (仅平铺) */
+    {MODKEY | ShiftMask, XK_j, exchange_client, {.i = DOWN}},  /* super shift j      | 二维交换窗口 (仅平铺) */
+    {MODKEY | ShiftMask, XK_h, exchange_client, {.i = LEFT}},  /* super shift h      | 二维交换窗口 (仅平铺) */
+    {MODKEY | ShiftMask, XK_l, exchange_client, {.i = RIGHT}}, /* super shift l      | 二维交换窗口 (仅平铺) */
+
+    /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
+    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float")}, /* super s          | 打开scratch终端        */
+    {MODKEY, XK_Return, spawn, SHCMD("st")},                           /* super enter      | 打开st终端             */
+    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                      /* super +          | 打开全局st终端         */
+    {MODKEY, XK_e, spawn, SHCMD("killall pcmanfm || pcmanfm")},        /* super F1         | 打开/关闭pcmanfm       */
+    {MODKEY, XK_d, spawn, SHCMD("dmenu_run")},                         /* super d          | dmenu_run          */
+    {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},          /* super n          | 锁定屏幕               */
+    {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},       /* super F3   | 音量加                 */
+    {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},     /* super F2 | 音量减                 */
+    {MODKEY, XK_F1, spawn, SHCMD("$DWM/scripts/set_vol.sh mute")},     /* super F1 | 静音                 */
+    {MODKEY, XK_F11, spawn, SHCMD("$DWM/scripts/set_light.sh down")},  /* super F11   | 亮度减                 */
+    {MODKEY, XK_F12, spawn, SHCMD("$DWM/scripts/set_light.sh up")},    /* super F12   | 亮度加                 */
+    {NULL, XK_Print, spawn, SHCMD("flameshot gui")},                   /* super shift a    | 截图                   */
+
+    /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
+    /* super shift key : 将聚焦窗口移动到对应tag */
+    /* key tag cmd */
+    TAGKEYS(XK_1, 0, "st")
+        TAGKEYS(XK_2, 1, 0)
+            TAGKEYS(XK_3, 2, 0)
+                TAGKEYS(XK_4, 3, 0)
+                    TAGKEYS(XK_5, 4, 0)
+                        TAGKEYS(XK_6, 5, 0)
+                            TAGKEYS(XK_7, 6, 0)
+                                TAGKEYS(XK_c, 7, "google-chrome-stable")
+                                    TAGKEYS(XK_m, 8, 0)
+                                        TAGKEYS(XK_v, 9, "virtualbox")};
+
+static Button buttons[] = {
+    /* click               event mask       button            function       argument  */
+    /* 点击窗口标题栏操作 */
+    {ClkWinTitle, 0, Button1, hideotherwins, {0}}, // 左键        |  点击标题     |  隐藏其他窗口仅保留该窗口
+    {ClkWinTitle, 0, Button3, togglewin, {0}},     // 右键        |  点击标题     |  切换窗口显示状态
+    /* 点击窗口操作 */
+    {ClkClientWin, MODKEY, Button1, movemouse, {0}},   // super+左键  |  拖拽窗口     |  拖拽窗口
+    {ClkClientWin, MODKEY, Button3, resizemouse, {0}}, // super+右键  |  拖拽窗口     |  改变窗口大小
+    /* 点击tag操作 */
+    {ClkTagBar, 0, Button1, view, {0}},        // 左键        |  点击tag      |  切换tag
+    {ClkTagBar, 0, Button3, toggleview, {0}},  // 右键        |  点击tag      |  切换是否显示tag
+    {ClkTagBar, MODKEY, Button1, tag, {0}},    // super+左键  |  点击tag      |  将窗口移动到对应tag
+    {ClkTagBar, 0, Button4, viewtoleft, {0}},  // 鼠标滚轮上  |  tag          |  向前切换tag
+    {ClkTagBar, 0, Button5, viewtoright, {0}}, // 鼠标滚轮下  |  tag          |  向后切换tag
+    /* 点击状态栏操作 */
+    {ClkStatusText, 0, Button1, clickstatusbar, {0}}, // 左键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal L
+    {ClkStatusText, 0, Button2, clickstatusbar, {0}}, // 中键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal M
+    {ClkStatusText, 0, Button3, clickstatusbar, {0}}, // 右键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal R
+    {ClkStatusText, 0, Button4, clickstatusbar, {0}}, // 鼠标滚轮上  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal U
+    {ClkStatusText, 0, Button5, clickstatusbar, {0}}, // 鼠标滚轮下  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal D
 };
