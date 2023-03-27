@@ -19,7 +19,7 @@ daemons() {
     kill cfw ; cfw &
     kill nm-applet ; nm-applet &
     kill redshift ; redshift &
-    kill dunst ; dunst -conf $DWM/scripts/config/dunstrc &
+    kill dunst ; dunst &
 }
 
 cron() {
