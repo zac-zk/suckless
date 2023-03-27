@@ -21,8 +21,8 @@ static const int nmaster = 1;                  /* 主工作区 窗口数量 */
 static const unsigned int snap = 10;           /* 边缘依附宽度 */
 static const unsigned int baralpha = 0xc0;     /* 状态栏透明度 */
 static const unsigned int borderalpha = 0xdd;  /* 边框透明度 */
-static const char *fonts[] = {"Iosevka Custom:size=15:antialias=true:autohint=true",
-                              "WenQuanYi Micro Hei:size=15:antialias=true:autohint=true",
+static const char *fonts[] = {"Iosevka Custom:size=14:antialias=true:autohint=true",
+                              "WenQuanYi Micro Hei:size=14:antialias=true:autohint=true",
                               "Symbols Nerd Font:pixelsize=24:type=1000-em:antialias=true:autohint=true"};
 static const char *colors[][3] = {
     /* 颜色设置 ColFg, ColBg, ColBorder */
@@ -30,7 +30,7 @@ static const char *colors[][3] = {
     [SchemeSel] = {"#ffffff", "#37474F", "#42A5F5"},
     [SchemeSelGlobal] = {"#ffffff", "#37474F", "#FFC0CB"},
     [SchemeHid] = {"#dddddd", NULL, NULL},
-    [SchemeSystray] = {NULL, "#7799AA", NULL},
+    [SchemeSystray] = {NULL, "#172A3A", NULL},
     [SchemeUnderline] = {"#7799AA", NULL, NULL},
     [SchemeNormTag] = {"#bbbbbb", "#333333", NULL},
     [SchemeSelTag] = {"#eeeeee", "#333333", NULL},
@@ -58,16 +58,16 @@ static const char scratchpadname[] = "scratchpad";
 /* 自定义特定实例的显示状态 */
 //            ﮸  ﭮ 切
 static const char *tags[] = {
-    "", // tag:0  key:1  desc:terminal1
-    "", // tag:1  key:2  desc:terminal2
-    "", // tag:2  key:3  desc:terminal3
-    "", // tag:3  key:4  desc:terminal4
-    "", // tag:4  key:5  desc:terminal5
-    "", // tag:5  key:6  desc:terminal6
-    "", // tag:6  key:7  desc:terminal7
-    "", // tag:7  key:c  desc:browser
-    "", // tag:8  key:m  desc:music
-    "", // tag 9  key:v  desc:virtualmachine
+    "",  // tag:0  key:1  desc:terminal1
+    "",  // tag:1  key:2  desc:terminal2
+    "",  // tag:2  key:3  desc:terminal3
+    "",  // tag:3  key:4  desc:terminal4
+    "",  // tag:4  key:5  desc:terminal5
+    "",  // tag:5  key:6  desc:terminal6
+    "󰏆", // tag:6  key:w  desc:terminal7
+    "",  // tag:7  key:c  desc:browser
+    "",  // tag:8  key:m  desc:music
+    "",  // tag 9  key:v  desc:virtualmachine
 };
 
 /* 自定义窗口显示规则 */
@@ -78,6 +78,7 @@ static const char *tags[] = {
 /* isnoborder 定义符合该规则的窗口是否无边框 */
 /* monitor 定义符合该规则的窗口显示在哪个显示器上 -1 为当前屏幕 */
 /* floatposition 定义符合该规则的窗口显示的位置 0 中间，1到9分别为9宫格位置，例如1左上，9右下，3右上 */
+/* xprop:WM_CLASS = instance,class */
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor floatposition */
     /** 优先级高 越在上面优先度越高 */
@@ -85,20 +86,27 @@ static const Rule rules[] = {
     {NULL, NULL, "图片查看", 0, 1, 0, 0, -1, 0},   // 微信图片查看器      浮动
 
     /** 普通优先度 */
-    {"obs", NULL, NULL, 1 << 3, 0, 0, 0, -1, 0},                         // obs        tag -> 󰕧
-    {"chrome", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                      // chrome     tag -> 
-    {"Chromium", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                    // Chromium   tag -> 
-    {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},                     // chrome     tag -> 
-    {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},                       // music      tag ->  浮动、无边框
-    {"feh", NULL, NULL, 0, 1, 0, 1,-1,0},
-    {NULL, "qq", NULL, 1 << 6, 0, 0, 1, -1, 0},                          // qq  无边框
-    {NULL, "wechat.exe", NULL, 0, 0, 0, 1, -1, 0},                       // wechat无边框
-    {NULL, "wxwork.exe", NULL, 0, 0, 0, 1, -1, 0},                       // workwechat 无边框
-    {"Vncviewer", NULL, NULL, 0, 1, 0, 1, -1, 2},                        // Vncviewer           浮动、无边框 屏幕顶部
-    {"flameshot", NULL, NULL, 0, 1, 0, 0, -1, 0},                        // 火焰截图            浮动
-    {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
-    {"Pcmanfm", NULL, NULL, 0, 1, 0, 1, -1, 3},                          // pcmanfm             浮动、无边框 右上角
+    {"wpsoffice", NULL, NULL, 1 << 6, 0, 0, 0, -1, 0},
+    {"Zotero", NULL, NULL, 1 << 6, 0, 0, 0, -1, 0},
+    {"chrome", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},   // chrome     tag -> 
+    {"Chromium", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0}, // Chromium   tag -> 
+    {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},  // chrome     tag -> 
+    {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
+    {"VirtualBox Manager", NULL, NULL, 1 << 9, 1, 0, 1, -1, 0},
+
     {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
+
+    {"feh", NULL, NULL, 0, 1, 0, 1, -1, 0},
+    {NULL, "qq", NULL, 0, 0, 0, 1, -1, 0},         // qq  无边框
+    {NULL, "wechat.exe", NULL, 0, 1, 0, 1, -1, 0}, // wechat无边框
+    {"Vncviewer", NULL, NULL, 0, 1, 0, 1, -1, 2},  // Vncviewer           浮动、无边框 屏幕顶部
+    {"flameshot", NULL, NULL, 0, 1, 0, 0, -1, 0},  // 火焰截图            浮动
+    {"Pcmanfm", NULL, NULL, 0, 1, 0, 1, -1, 3},    // pcmanfm             浮动、无边框 右上角
+    {NULL, "goldendict", NULL, 0, 1, 0, 0, -1, 0},
+    {NULL, NULL, "Fcitx 配置", 0, 1, 0, 0, -1, 0},           // fcitx5配置  浮动
+    {NULL, "copyq", NULL, 0, 1, 0, 0, -1, 0},                // copyq    浮动
+    {"Ibus-setup-libpinyin", NULL, NULL, 0, 1, 0, 0, -1, 0}, // ibus设置界面 浮动
 
     /** 部分特殊class的规则 */
     {"float", NULL, NULL, 0, 1, 0, 0, -1, 0},        // class = float       浮动
@@ -152,20 +160,20 @@ static Key keys[] = {
     {MODKEY, XK_t, togglefloating, {0}},                /* super t            |  开启/关闭 聚焦目标的float模式 */
     {MODKEY | ShiftMask, XK_f, toggleallfloating, {0}}, /* super shift f      |  开启/关闭 全部目标的float模式 */
     {MODKEY, XK_f, fullscreen, {0}},                    /* super f            |  开启/关闭 全屏 */
-    {MODKEY | ShiftMask, XK_b, togglebar, {0}},         /* super shift f      |  开启/关闭 状态栏 */
+    {MODKEY, XK_b, togglebar, {0}},                     /* super b      |  开启/关闭 状态栏 */
     {MODKEY, XK_g, toggleglobal, {0}},                  /* super g            |  开启/关闭 全局 */
     {MODKEY, XK_u, toggleborder, {0}},                  /* super u            |  开启/关闭 边框 */
     {MODKEY | ShiftMask, XK_e, incnmaster, {.i = +1}},  /* super e            |  改变主工作区窗口数量 (1 2中切换) */
 
-    {MODKEY, XK_b, focusmon, {.i = +1}},           /* super b            |  光标移动到另一个显示器 */
-    {MODKEY | ShiftMask, XK_b, tagmon, {.i = +1}}, /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    {MODKEY, XK_slash, focusmon, {.i = +1}},           /* super /            |  光标移动到另一个显示器 */
+    {MODKEY | ShiftMask, XK_slash, tagmon, {.i = +1}}, /* super shift /      |  将聚焦窗口移动到另一个显示器 */
 
     {MODKEY, XK_q, killclient, {0}},                    /* super q            |  关闭窗口 */
     {MODKEY | ControlMask, XK_q, forcekillclient, {0}}, /* super ctrl q       |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
 
     {MODKEY | ControlMask, XK_F12, quit, {0}}, /* super ctrl f12     |  退出dwm */
 
-    {MODKEY | ShiftMask, XK_space, selectlayout, {.v = &layouts[1]}}, /* super shift g  |  切换到grid布局 */
+    {MODKEY | ShiftMask, XK_space, selectlayout, {.v = &layouts[1]}}, /* super shift space  |  切换到grid布局 */
     {MODKEY, XK_o, showonlyorall, {0}},                               /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     {MODKEY | ControlMask, XK_equal, setgap, {.i = -6}}, /* super ctrl +       |  窗口增大 */
@@ -192,29 +200,29 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_l, exchange_client, {.i = RIGHT}}, /* super shift l      | 二维交换窗口 (仅平铺) */
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
-    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float")}, /* super s          | 打开scratch终端        */
-    {MODKEY, XK_Return, spawn, SHCMD("st")},                           /* super enter      | 打开st终端             */
-    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                      /* super +          | 打开全局st终端         */
-    {MODKEY, XK_e, spawn, SHCMD("killall pcmanfm || pcmanfm")},        /* super F1         | 打开/关闭pcmanfm       */
-    {MODKEY, XK_d, spawn, SHCMD("dmenu_run")},                         /* super d          | dmenu_run          */
-    {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},          /* super n          | 锁定屏幕               */
-    {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},       /* super F3   | 音量加                 */
-    {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},     /* super F2 | 音量减                 */
-    {MODKEY, XK_F1, spawn, SHCMD("$DWM/scripts/set_vol.sh mute")},     /* super F1 | 静音                 */
-    {MODKEY, XK_F11, spawn, SHCMD("$DWM/scripts/set_light.sh down")},  /* super F11   | 亮度减                 */
-    {MODKEY, XK_F12, spawn, SHCMD("$DWM/scripts/set_light.sh up")},    /* super F12   | 亮度加                 */
-    {NULL, XK_Print, spawn, SHCMD("flameshot gui")},                   /* super shift a    | 截图                   */
+    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 65x16")}, /* super s          | 打开scratch终端        */
+    {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
+    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
+    {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                    /* super e         | 打开/关闭pcmanfm       */
+    {MODKEY, XK_d, spawn, SHCMD("dmenu_run")},                                  /* super d          | dmenu_run          */
+    {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                   /* super n          | 锁定屏幕               */
+    {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                /* super F3   | 音量加                 */
+    {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},              /* super F2 | 音量减                 */
+    {MODKEY, XK_F1, spawn, SHCMD("$DWM/scripts/set_vol.sh toggle")},            /* super F1 | 静音                 */
+    {MODKEY, XK_F11, spawn, SHCMD("$DWM/scripts/set_light.sh down")},           /* super F11   | 亮度减                 */
+    {MODKEY, XK_F12, spawn, SHCMD("$DWM/scripts/set_light.sh up")},             /* super F12   | 亮度加                 */
+    {NULL, XK_Print, spawn, SHCMD("flameshot gui")},                            /* super shift a    | 截图                   */
 
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
     /* key tag cmd */
-    TAGKEYS(XK_1, 0, "st")
+    TAGKEYS(XK_1, 0, 0)
         TAGKEYS(XK_2, 1, 0)
             TAGKEYS(XK_3, 2, 0)
                 TAGKEYS(XK_4, 3, 0)
                     TAGKEYS(XK_5, 4, 0)
                         TAGKEYS(XK_6, 5, 0)
-                            TAGKEYS(XK_7, 6, 0)
+                            TAGKEYS(XK_w, 6, 0)
                                 TAGKEYS(XK_c, 7, "google-chrome-stable")
                                     TAGKEYS(XK_m, 8, 0)
                                         TAGKEYS(XK_v, 9, "virtualbox")};

@@ -25,7 +25,7 @@ get_by_acpi() {
 update() {
     get_by_acpi
 
-    icon=" $bat_icon "
+    icon=" $bat_icon"
     text=" $bat_text% "
 
     sed -i '/^export '$this'=.*$/d' $tempfile

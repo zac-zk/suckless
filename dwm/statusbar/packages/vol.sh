@@ -18,13 +18,13 @@ update() {
     vol_text=$(amixer -M get Master | tail -n1 | sed -r "s/.*\[(.*)%\].*/\1/")
     vol_muted=$(amixer get Master | tail -n1 | sed -r "s/.*\[(on|off)\]/\1/")
 
-    if [ ! "$vol_muted" = "on" ];      then vol_text="--"; vol_icon="ﱝ";
+    if [ "$vol_muted" = "off" ];      then vol_text="--"; vol_icon="ﱝ";
     elif [ "$vol_text" -eq 0 ];  then vol_text="00"; vol_icon="";
     elif [ "$vol_text" -lt 30 ]; then vol_icon=""; vol_text=$vol_text;
     elif [ "$vol_text" -le 60 ]; then vol_icon="󰕾";
     else vol_icon=""; fi
 
-    icon=" $vol_icon "
+    icon=" $vol_icon"
     text=" $vol_text% "
 
     sed -i '/^export '$this'=.*$/d' $tempfile
@@ -39,10 +39,10 @@ notify() {
 click() {
     case "$1" in
         L) notify                                           ;; # 仅通知
-        M) pactl set-sink-mute @DEFAULT_SINK@ toggle        ;; # 切换静音
+        M) $DWM/scripts/set_vol.sh toggle                   ;; # 切换静音
         R) killall pavucontrol || pavucontrol --class=FGN & ;; # 打开pavucontrol
-        U) pactl set-sink-volume @DEFAULT_SINK@ +5%; notify ;; # 音量加
-        D) pactl set-sink-volume @DEFAULT_SINK@ -5%; notify ;; # 音量减
+        U) $DWM/scripts/set_vol.sh up ; notify              ;; # 音量加
+        D) $DWM/scripts/set_vol.sh down ; notify            ;; # 音量减
     esac
 }
 

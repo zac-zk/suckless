@@ -29,7 +29,7 @@ update() {
     elif [ "$light_text" -ge 10 ]; then light_icon="󱩎";
     else light_icon="󰌶"; fi
 
-    icon=" $light_icon "
+    icon=" $light_icon"
     text=" $light_text% "
 
     sed -i '/^export '$this'=.*$/d' $tempfile

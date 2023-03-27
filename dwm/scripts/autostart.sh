@@ -13,12 +13,13 @@ daemons() {
     $DWM/statusbar/statusbar.sh cron &   # 开启状态栏定时更新
     $DWM/scripts/wp-change.sh       #开机设定壁纸
     xss-lock -- $DWM/scripts/blurlock.sh &       # 开启自动锁屏程序
-    kill fcitx5 ; fcitx5 &                    # 开启输入法
-    kill picom ; picom -b &
+    kill ibus-daemon ; ibus-daemon -x -d &                    # 开启输入法
+    kill picom ; picom -b --config $DWM/scripts/picom.conf &
     kill copyq ; copyq &
     kill cfw ; cfw &
     kill nm-applet ; nm-applet &
     kill redshift ; redshift &
+    kill dunst ; dunst -conf $DWM/scripts/config/dunstrc &
 }
 
 cron() {

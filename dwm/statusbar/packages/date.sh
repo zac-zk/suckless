@@ -25,7 +25,7 @@ update() {
         "12") time_icon="" ;;
     esac
 
-    icon=" $time_icon "
+    icon=" $time_icon"
     text=" $time_text "
 
     sed -i '/^export '$this'=.*$/d' $tempfile
