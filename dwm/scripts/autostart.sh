@@ -4,8 +4,6 @@
 settings() {
     [ $1 ] && sleep $1
     xset -b                                   # 关闭蜂鸣器
-    $DWM/scripts/inverse-scroll.sh      # 触摸板自然滚动
-    $DWM/scripts/tap-to-click.sh          # 触摸板点击
 }
 
 daemons() {
