@@ -93,7 +93,8 @@ static const Rule rules[] = {
     {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},  // chrome     tag -> 
     {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
     {"spotify", NULL, NULL, 1 << 8, 0, 0, 1, -1, 0},    // spotify      tag ->   无边框
-    {"VirtualBox Manager", NULL, NULL, 1 << 9, 1, 0, 1, -1, 0},
+    {NULL, "VirtualBox Manager", NULL, 1 << 9, 1, 0, 1, -1, 0},
+    {NULL, "VirtualBox", NULL, 1 << 9, 1, 0, 1, -1, 0},
 
     {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部

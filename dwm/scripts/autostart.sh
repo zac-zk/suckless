@@ -14,7 +14,7 @@ daemons() {
     $DWM/scripts/wp-change.sh       #开机设定壁纸
     xss-lock -- $DWM/scripts/blurlock.sh &       # 开启自动锁屏程序
     kill ibus-daemon ; ibus-daemon -x -d &                    # 开启输入法
-    kill picom ; picom -b --config $DWM/scripts/picom.conf &
+    kill picom ; picom -b --experimental-backends --config $DWM/scripts/picom.conf &
     kill copyq ; copyq &
     kill cfw ; cfw &
     kill nm-applet ; nm-applet &
