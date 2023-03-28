@@ -92,6 +92,7 @@ static const Rule rules[] = {
     {"Chromium", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0}, // Chromium   tag -> 
     {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},  // chrome     tag -> 
     {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
+    {"spotify", NULL, NULL, 1 << 8, 0, 0, 1, -1, 0},    // spotify      tag ->   无边框
     {"VirtualBox Manager", NULL, NULL, 1 << 9, 1, 0, 1, -1, 0},
 
     {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
@@ -224,7 +225,7 @@ static Key keys[] = {
                         TAGKEYS(XK_6, 5, 0)
                             TAGKEYS(XK_w, 6, 0)
                                 TAGKEYS(XK_c, 7, "google-chrome-stable")
-                                    TAGKEYS(XK_m, 8, 0)
+                                    TAGKEYS(XK_m, 8, "spotify")
                                         TAGKEYS(XK_v, 9, "virtualbox")};
 
 static Button buttons[] = {
