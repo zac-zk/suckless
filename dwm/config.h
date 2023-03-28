@@ -206,7 +206,7 @@ static Key keys[] = {
     {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
     {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
     {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                    /* super e         | 打开/关闭pcmanfm       */
-    {MODKEY, XK_d, spawn, SHCMD("dmenu_run")},                                  /* super d          | dmenu_run          */
+    {MODKEY, XK_d, spawn, SHCMD("rofi -show run")},                                  /* super d          | rofi run          */
     {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                   /* super n          | 锁定屏幕               */
     {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                /* super F3   | 音量加                 */
     {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},              /* super F2 | 音量减                 */
@@ -249,4 +249,8 @@ static Button buttons[] = {
     {ClkStatusText, 0, Button3, clickstatusbar, {0}}, // 右键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal R
     {ClkStatusText, 0, Button4, clickstatusbar, {0}}, // 鼠标滚轮上  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal U
     {ClkStatusText, 0, Button5, clickstatusbar, {0}}, // 鼠标滚轮下  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal D
+
+    /* 点击bar空白处 */
+    { ClkBarEmpty,         0,               Button1,          spawn, SHCMD("rofi -show window") },        // 左键        |  bar空白处    |  rofi 执行 window
+    { ClkBarEmpty,         0,               Button3,          spawn, SHCMD("rofi -show drun") },          // 右键        |  bar空白处    |  rofi 执行 drun
 };
