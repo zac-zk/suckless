@@ -1,8 +1,8 @@
 
 export _icons='^sicons^^c#2D1B46^^b#99CCFF0x88^  '
-export _vol='^svol^^c#442266^^b#CCFFCC0x88^ 󰕾^c#442266^^b#CCFFCC0x99^ 60% '
 export _bat='^sbat^^c#3B001B^^b#99CCFF0x88^ ^c#3B001B^^b#99CCFF0x99^ 100% '
 export _light='^slight^^c#3B001B^^b#99CCCC0x88^ 󱩏^c#3B001B^^b#99CCCC0x99^ 20% '
-export _cpu='^scpu^^c#3E206F^^b#CCCCFF0x88^ 󰻠^c#3E206F^^b#CCCCFF0x99^ 1.6% 54°C '
-export _mem='^smem^^c#3B001B^^b#CCFFFF0x88^ ^c#3B001B^^b#CCFFFF0x99^ 20% '
-export _date='^sdate^^c#4B005B^^b#CCFF990x88^ ^c#4B005B^^b#CCFF990x99^ 03/28 21:28:29 '
+export _vol='^svol^^c#442266^^b#CCFFCC0x88^ 󰕾^c#442266^^b#CCFFCC0x99^ 50% '
+export _cpu='^scpu^^c#3E206F^^b#CCCCFF0x88^ 󰻠^c#3E206F^^b#CCCCFF0x99^ 3.0% 51°C '
+export _mem='^smem^^c#3B001B^^b#CCFFFF0x88^ ^c#3B001B^^b#CCFFFF0x99^ 19% '
+export _date='^sdate^^c#4B005B^^b#CCFF990x88^ ^c#4B005B^^b#CCFF990x99^ 03/28 21:49:20 '
