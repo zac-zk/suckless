@@ -4,7 +4,7 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_mem
-color="^c#ffffff^^b#3333330x88^"
+color="^c#ffffff^^b#3333330x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {

@@ -4,7 +4,7 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_icons
-color="^c#ffffff^^b#7799AA0x99^"
+color="^c#ffffff^^b#3333330x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
@@ -24,7 +24,7 @@ notify() {
 click() {
     case "$1" in
         L) notify; $DWM/scripts/wp-change.sh ;;
-        R)  ;;
+        R) $DWM/scripts/rofi.sh ;;
     esac
 }
 

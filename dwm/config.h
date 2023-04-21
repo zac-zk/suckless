@@ -6,10 +6,10 @@ static const unsigned int borderpx = 2;        /* 窗口边框大小 */
 static const unsigned int systraypinning = 0;  /* 托盘跟随的显示器 0代表不指定显示器 */
 static const unsigned int systrayspacing = 1;  /* 托盘间距 */
 static const unsigned int systrayspadding = 5; /* 托盘和状态栏的间隙 */
-static int gappi = 12;                         /* 窗口与窗口 缝隙大小 */
-static int gappo = 12;                         /* 窗口与边缘 缝隙大小 */
-static const int _gappo = 12;                  /* 窗口与窗口 缝隙大小 不可变 用于恢复时的默认值 */
-static const int _gappi = 12;                  /* 窗口与边缘 缝隙大小 不可变 用于恢复时的默认值 */
+static int gappi = 5;                          /* 窗口与窗口 缝隙大小 */
+static int gappo = 5;                          /* 窗口与边缘 缝隙大小 */
+static const int _gappo = 5;                   /* 窗口与窗口 缝隙大小 不可变 用于恢复时的默认值 */
+static const int _gappi = 5;                   /* 窗口与边缘 缝隙大小 不可变 用于恢复时的默认值 */
 static const int vertpad = 5;                  /* vertical padding of bar */
 static const int sidepad = 5;                  /* horizontal padding of bar */
 static const int overviewgappi = 24;           /* overview时 窗口与边缘 缝隙大小 */
@@ -204,18 +204,18 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_l, exchange_client, {.i = RIGHT}}, /* super shift l      | 二维交换窗口 (仅平铺) */
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
-    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 65x16")}, /* super s          | 打开scratch终端        */
-    {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
-    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
-    {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                    /* super e         | 打开/关闭pcmanfm       */
-    {MODKEY, XK_d, spawn, SHCMD("rofi -show run")},                             /* super d          | rofi run          */
-    {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                   /* super n          | 锁定屏幕               */
-    {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                /* super F3   | 音量加                 */
-    {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},              /* super F2 | 音量减                 */
-    {MODKEY, XK_F1, spawn, SHCMD("$DWM/scripts/set_vol.sh toggle")},            /* super F1 | 静音                 */
-    {MODKEY, XK_F11, spawn, SHCMD("$DWM/scripts/set_light.sh down")},           /* super F11   | 亮度减                 */
-    {MODKEY, XK_F12, spawn, SHCMD("$DWM/scripts/set_light.sh up")},             /* super F12   | 亮度加                 */
-    {NULL, XK_Print, spawn, SHCMD("flameshot gui")},                            /* super shift a    | 截图                   */
+    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 65x16")},                                       /* super s          | 打开scratch终端        */
+    {MODKEY, XK_Return, spawn, SHCMD("st")},                                                                          /* super enter      | 打开st终端             */
+    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                                                                     /* super -          | 打开全局st终端         */
+    {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                                                          /* super e         | 打开/关闭pcmanfm       */
+    {MODKEY, XK_d, spawn, SHCMD("rofi -show combi -run-shell-command '{terminal} -e bash -ic \" {cmd} && read \"'")}, /* super d          | rofi run          */
+    {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                                                         /* super n          | 锁定屏幕               */
+    {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                                                      /* super F3   | 音量加                 */
+    {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},                                                    /* super F2 | 音量减                 */
+    {MODKEY, XK_F1, spawn, SHCMD("$DWM/scripts/set_vol.sh toggle")},                                                  /* super F1 | 静音                 */
+    {MODKEY, XK_F11, spawn, SHCMD("$DWM/scripts/set_light.sh down")},                                                 /* super F11   | 亮度减                 */
+    {MODKEY, XK_F12, spawn, SHCMD("$DWM/scripts/set_light.sh up")},                                                   /* super F12   | 亮度加                 */
+    {NULL, XK_Print, spawn, SHCMD("flameshot gui")},                                                                  /* super shift a    | 截图                   */
 
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
@@ -253,6 +253,6 @@ static Button buttons[] = {
     {ClkStatusText, 0, Button5, clickstatusbar, {0}}, // 鼠标滚轮下  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal D
 
     /* 点击bar空白处 */
-    {ClkBarEmpty, 0, Button1, spawn, SHCMD("rofi -show window")}, // 左键        |  bar空白处    |  rofi 执行 window
-    {ClkBarEmpty, 0, Button3, spawn, SHCMD("rofi -show drun")},   // 右键        |  bar空白处    |  rofi 执行 drun
+    // {ClkBarEmpty, 0, Button1, spawn, SHCMD("rofi -show window")}, // 左键        |  bar空白处    |  rofi 执行 window
+    // {ClkBarEmpty, 0, Button3, spawn, SHCMD("rofi -show drun")},   // 右键        |  bar空白处    |  rofi 执行 drun
 };

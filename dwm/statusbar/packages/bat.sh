@@ -33,12 +33,13 @@ update() {
 
 notify() {
     update
+    notify-send -r 9527 -h int:value:$bat_text -h string:hlcolor:#dddddd "$bat_icon Capacity"
 }
 
 click() {
     case "$1" in
         L) notify ;;
-        R) killall xfce4-power-manager-settings || xfce4-power-manager-settings & ;;
+        R) ;;
     esac
 }
 
