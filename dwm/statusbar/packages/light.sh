@@ -5,8 +5,7 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_light
-icon_color="^c#3B001B^^b#99CCCC0x88^"
-text_color="^c#3B001B^^b#99CCCC0x99^"
+color="^c#ffffff^^b#3333330x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 get_by_xbacklight() {
@@ -33,7 +32,7 @@ update() {
     text=" $light_text% "
 
     sed -i '/^export '$this'=.*$/d' $tempfile
-    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $tempfile
+    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$color" "$icon" "$color" "$text" >> $tempfile
 }
 
 notify() {

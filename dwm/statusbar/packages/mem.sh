@@ -4,8 +4,7 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_mem
-icon_color="^c#3B001B^^b#CCFFFF0x88^"
-text_color="^c#3B001B^^b#CCFFFF0x99^"
+color="^c#ffffff^^b#3333330x88^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
@@ -21,7 +20,7 @@ update() {
     text=" $mem_text "
 
     sed -i '/^export '$this'=.*$/d' $tempfile
-    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $tempfile
+    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$color" "$icon" "$color" "$text" >> $tempfile
 }
 
 notify() {
@@ -34,18 +33,18 @@ swap:\t $(echo "$free_result" | sed -n 3p | awk '{print $3}')/$(echo "$free_resu
     notify-send " Memory" "$text" -r 9527
 }
 
-call_btop() {
+call_htop() {
     pid1=`ps aux | grep 'st -t statusutil' | grep -v grep | awk '{print $2}'`
     pid2=`ps aux | grep 'st -t statusutil_mem' | grep -v grep | awk '{print $2}'`
     mx=`xdotool getmouselocation --shell | grep X= | sed 's/X=//'`
     my=`xdotool getmouselocation --shell | grep Y= | sed 's/Y=//'`
-    kill $pid1 && kill $pid2 || st -t statusutil_mem -g 82x25+$((mx - 328))+$((my + 20)) -c FGN -e btop
+    kill $pid1 && kill $pid2 || st -t statusutil_mem -g 82x25+$((mx - 328))+$((my + 20)) -c FGN -e htop
 }
 
 click() {
     case "$1" in
         L) notify ;;
-        R) call_btop ;;
+        R) call_htop ;;
     esac
 }
 

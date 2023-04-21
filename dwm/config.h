@@ -3,7 +3,7 @@
 static int showsystray = 1;                    /* 是否显示托盘栏 */
 static const int newclientathead = 0;          /* 定义新窗口在栈顶还是栈底 */
 static const unsigned int borderpx = 2;        /* 窗口边框大小 */
-static const unsigned int systraypinning = 1;  /* 托盘跟随的显示器 0代表不指定显示器 */
+static const unsigned int systraypinning = 0;  /* 托盘跟随的显示器 0代表不指定显示器 */
 static const unsigned int systrayspacing = 1;  /* 托盘间距 */
 static const unsigned int systrayspadding = 5; /* 托盘和状态栏的间隙 */
 static int gappi = 12;                         /* 窗口与窗口 缝隙大小 */
@@ -30,7 +30,7 @@ static const char *colors[][3] = {
     [SchemeSel] = {"#ffffff", "#37474F", "#42A5F5"},
     [SchemeSelGlobal] = {"#ffffff", "#37474F", "#FFC0CB"},
     [SchemeHid] = {"#dddddd", NULL, NULL},
-    [SchemeSystray] = {NULL, "#172A3A", NULL},
+    [SchemeSystray] = {NULL, "#333333", NULL},
     [SchemeUnderline] = {"#7799AA", NULL, NULL},
     [SchemeNormTag] = {"#bbbbbb", "#333333", NULL},
     [SchemeSelTag] = {"#eeeeee", "#333333", NULL},
@@ -92,7 +92,8 @@ static const Rule rules[] = {
     {"Chromium", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0}, // Chromium   tag -> 
     {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},  // chrome     tag -> 
     {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
-    {"spotify", NULL, NULL, 1 << 8, 0, 0, 1, -1, 0},    // spotify      tag ->   无边框
+    {"spotify", NULL, NULL, 1 << 8, 0, 0, 1, -1, 0},  // spotify      tag ->   无边框
+    {"sunamu", NULL, NULL, 1 << 8, 1, 0, 1, -1, 3},   // sunamu      tag ->   无边框
     {NULL, "VirtualBox Manager", NULL, 1 << 9, 1, 0, 1, -1, 0},
     {NULL, "VirtualBox", NULL, 1 << 9, 1, 0, 1, -1, 0},
 
@@ -109,6 +110,7 @@ static const Rule rules[] = {
     {NULL, NULL, "Fcitx 配置", 0, 1, 0, 0, -1, 0},           // fcitx5配置  浮动
     {NULL, "copyq", NULL, 0, 1, 0, 0, -1, 0},                // copyq    浮动
     {"Ibus-setup-libpinyin", NULL, NULL, 0, 1, 0, 0, -1, 0}, // ibus设置界面 浮动
+    {"blueman-manager", NULL, NULL, 0, 1, 0, 0, -1, 0},      // blueman  浮动
 
     /** 部分特殊class的规则 */
     {"float", NULL, NULL, 0, 1, 0, 0, -1, 0},        // class = float       浮动
@@ -167,10 +169,10 @@ static Key keys[] = {
     {MODKEY, XK_u, toggleborder, {0}},                  /* super u            |  开启/关闭 边框 */
     {MODKEY | ShiftMask, XK_e, incnmaster, {.i = +1}},  /* super e            |  改变主工作区窗口数量 (1 2中切换) */
 
-    {MODKEY, XK_slash, focusmon, {.i = +1}},           /* super /            |  光标移动到另一个显示器 */
-    {MODKEY | ShiftMask, XK_slash, tagmon, {.i = +1}}, /* super shift /      |  将聚焦窗口移动到另一个显示器 */
+    {MODKEY, XK_grave, focusmon, {.i = +1}},           /* super /            |  光标移动到另一个显示器 */
+    {MODKEY | ShiftMask, XK_grave, tagmon, {.i = +1}}, /* super shift /      |  将聚焦窗口移动到另一个显示器 */
 
-    {MODKEY, XK_q, killclient, {0}},                    /* super q            |  关闭窗口 */
+    {MODKEY | ShiftMask, XK_q, killclient, {0}},        /* super q            |  关闭窗口 */
     {MODKEY | ControlMask, XK_q, forcekillclient, {0}}, /* super ctrl q       |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
 
     {MODKEY | ControlMask, XK_F12, quit, {0}}, /* super ctrl f12     |  退出dwm */
@@ -206,7 +208,7 @@ static Key keys[] = {
     {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
     {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
     {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                    /* super e         | 打开/关闭pcmanfm       */
-    {MODKEY, XK_d, spawn, SHCMD("rofi -show run")},                                  /* super d          | rofi run          */
+    {MODKEY, XK_d, spawn, SHCMD("rofi -show run")},                             /* super d          | rofi run          */
     {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                   /* super n          | 锁定屏幕               */
     {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                /* super F3   | 音量加                 */
     {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},              /* super F2 | 音量减                 */
@@ -251,6 +253,6 @@ static Button buttons[] = {
     {ClkStatusText, 0, Button5, clickstatusbar, {0}}, // 鼠标滚轮下  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal D
 
     /* 点击bar空白处 */
-    { ClkBarEmpty,         0,               Button1,          spawn, SHCMD("rofi -show window") },        // 左键        |  bar空白处    |  rofi 执行 window
-    { ClkBarEmpty,         0,               Button3,          spawn, SHCMD("rofi -show drun") },          // 右键        |  bar空白处    |  rofi 执行 drun
+    {ClkBarEmpty, 0, Button1, spawn, SHCMD("rofi -show window")}, // 左键        |  bar空白处    |  rofi 执行 window
+    {ClkBarEmpty, 0, Button3, spawn, SHCMD("rofi -show drun")},   // 右键        |  bar空白处    |  rofi 执行 drun
 };

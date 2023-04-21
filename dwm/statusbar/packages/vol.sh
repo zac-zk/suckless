@@ -7,8 +7,7 @@
 tempfile=$(cd $(dirname $0);cd ..;pwd)/temp
 
 this=_vol
-icon_color="^c#442266^^b#CCFFCC0x88^"
-text_color="^c#442266^^b#CCFFCC0x99^"
+color="^c#ffffff^^b#3333330x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 # check
@@ -28,7 +27,7 @@ update() {
     text=" $vol_text% "
 
     sed -i '/^export '$this'=.*$/d' $tempfile
-    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $tempfile
+    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$color" "$icon" "$color" "$text" >> $tempfile
 }
 
 notify() {

@@ -33,8 +33,8 @@ cron() {
     while true; do
         to=()                                                            # 存放本次需要更新的模块
         # [ $((i % 10)) -eq 0 ]  && to=(${to[@]} wifi)                     # 每 10秒  更新 wifi
-        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} cpu mem date)        # 每 20秒  更新 cpu mem vol icons
-        [ $((i % 60)) -eq 0 ] && to=(${to[@]} bat light)                      # 每 300秒 更新 bat
+        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} cpu mem date vol)        # 每 20秒  更新 cpu mem vol icons
+        [ $((i % 60)) -eq 0 ] && to=(${to[@]} bat)                      # 每 300秒 更新 bat
         [ $i -lt 30 ] && to=(icons cpu mem vol light bat date)            # 前 30秒  更新所有模块
         update ${to[@]}                                                  # 将需要更新的模块传递给 update
         sleep 1; let i+=1

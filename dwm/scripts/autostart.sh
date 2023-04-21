@@ -10,9 +10,9 @@ daemons() {
     [ $1 ] && sleep $1
     $DWM/statusbar/statusbar.sh cron &   # 开启状态栏定时更新
     $DWM/scripts/wp-change.sh       #开机设定壁纸
-    xss-lock -- $DWM/scripts/blurlock.sh &       # 开启自动锁屏程序
+    /usr/lib/polkit-kde-authentication-agent-1 & #提权
     kill ibus-daemon ; ibus-daemon -x -d &                    # 开启输入法
-    kill picom ; picom -b --experimental-backends --config $DWM/scripts/picom.conf &
+    kill picom ; picom --experimental-backends --config $DWM/scripts/picom.conf -b
     kill copyq ; copyq &
     kill cfw ; cfw &
     kill nm-applet ; nm-applet &
