@@ -8,7 +8,7 @@ color="^c#ffffff^^b#3333330x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
-	mem_icon=""
+	mem_icon="󰍛"
     mem_total=$(cat /proc/meminfo | grep "MemTotal:"| awk '{print $2}')
     mem_free=$(cat /proc/meminfo | grep "MemFree:"| awk '{print $2}')
     mem_buffers=$(cat /proc/meminfo | grep "Buffers:"| awk '{print $2}')
@@ -30,7 +30,7 @@ notify() {
 用量:\t $(echo "$free_result" | sed -n 2p | awk '{print $3}')/$(echo "$free_result" | sed -n 2p | awk '{print $2}')
 swap:\t $(echo "$free_result" | sed -n 3p | awk '{print $3}')/$(echo "$free_result" | sed -n 3p | awk '{print $2}')
 "
-    notify-send " Memory" "$text" -r 9527
+    notify-send "Memory" "$text" -r 9527
 }
 
 call_htop() {

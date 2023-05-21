@@ -15,9 +15,9 @@ get_by_acpi() {
     bat_text=$(expr $total_charge / $battery_number);
     if $(acpi -b | grep --quiet Discharging)
     then
-        bat_icon="";
+        bat_icon="󰁹";
     else 
-        bat_icon="";
+        bat_icon="󰂄";
     fi
 }
 
@@ -33,7 +33,7 @@ update() {
 
 notify() {
     update
-    notify-send -r 9527 -h int:value:$bat_text -h string:hlcolor:#dddddd "$bat_icon Capacity"
+    notify-send -r 9527 -h int:value:$bat_text -h string:hlcolor:#dddddd "Capacity"
 }
 
 click() {

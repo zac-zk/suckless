@@ -11,13 +11,13 @@ daemons() {
     $DWM/statusbar/statusbar.sh cron &   # 开启状态栏定时更新
     $DWM/scripts/wp-change.sh       #开机设定壁纸
     /usr/lib/polkit-kde-authentication-agent-1 & #提权
-    kill ibus-daemon ; ibus-daemon -x -d &                    # 开启输入法
-    kill picom ; picom --experimental-backends --config $DWM/scripts/picom.conf -b
-    kill copyq ; copyq &
-    kill cfw ; cfw &
-    kill nm-applet ; nm-applet &
-    kill redshift ; redshift &
-    kill dunst ; dunst &
+    killall fcitx5 ; fcitx5 -d &                    # 开启输入法
+    killall picom ; picom --experimental-backends --config $DWM/scripts/picom.conf -b
+    killall copyq ; copyq &
+    killall cfw ; cfw &
+    killall nm-applet ; nm-applet &
+    killall redshift ; redshift &
+    killall dunst ; dunst &
 }
 
 cron() {

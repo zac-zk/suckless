@@ -8,7 +8,7 @@ color="^c#ffffff^^b#3333330x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
-    icons=("")
+    icons=("󰍜")
 
     text=" ${icons[@]} "
 

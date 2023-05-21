@@ -37,7 +37,7 @@ update() {
 
 notify() {
     update
-    notify-send -r 9527 -h int:value:$light_text -h string:hlcolor:#dddddd "$light_icon Light"
+    notify-send -r 9527 -h int:value:$light_text -h string:hlcolor:#dddddd "Light"
 }
 
 click() {

@@ -58,16 +58,12 @@ static const char scratchpadname[] = "scratchpad";
 /* 自定义特定实例的显示状态 */
 //            ﮸  ﭮ 切
 static const char *tags[] = {
-    "",  // tag:0  key:1  desc:terminal1
-    "",  // tag:1  key:2  desc:terminal2
-    "",  // tag:2  key:3  desc:terminal3
-    "",  // tag:3  key:4  desc:terminal4
-    "",  // tag:4  key:5  desc:terminal5
-    "",  // tag:5  key:6  desc:terminal6
-    "󰏆", // tag:6  key:w  desc:terminal7
-    "",  // tag:7  key:c  desc:browser
-    "",  // tag:8  key:m  desc:music
-    "",  // tag 9  key:v  desc:virtualmachine
+    "󰣇",  // tag:0  key:1  desc:terminal1
+    "󰏆",  // tag:1  key:w  desc:terminal7
+    "",  // tag:2  key:c  desc:browser
+    "󰎄",  // tag:3  key:m  desc:music
+    "",  // tag 4  key:v  desc:virtualmachine
+    "",  // tag:5  key:2  desc:terminal
 };
 
 /* 自定义窗口显示规则 */
@@ -80,22 +76,22 @@ static const char *tags[] = {
 /* floatposition 定义符合该规则的窗口显示的位置 0 中间，1到9分别为9宫格位置，例如1左上，9右下，3右上 */
 /* xprop:WM_CLASS = instance,class */
 static const Rule rules[] = {
-    /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor floatposition */
+    /* class instance title tags_mask isfloating isglobal isnoborder monitor floatposition */
     /** 优先级高 越在上面优先度越高 */
     {NULL, NULL, "图片查看器", 0, 1, 0, 0, -1, 0}, // qq图片查看器        浮动
     {NULL, NULL, "图片查看", 0, 1, 0, 0, -1, 0},   // 微信图片查看器      浮动
 
     /** 普通优先度 */
-    {"wpsoffice", NULL, NULL, 1 << 6, 0, 0, 0, -1, 0},
-    {"Zotero", NULL, NULL, 1 << 6, 0, 0, 0, -1, 0},
-    {"chrome", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},   // chrome     tag -> 
-    {"Chromium", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0}, // Chromium   tag -> 
-    {"firefox", NULL, NULL, 1 << 7, 0, 0, 0, -1, 0},  // chrome     tag -> 
-    {"music", NULL, NULL, 1 << 8, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
-    {"spotify", NULL, NULL, 1 << 8, 0, 0, 1, -1, 0},  // spotify      tag ->   无边框
-    {"sunamu", NULL, NULL, 1 << 8, 1, 0, 1, -1, 3},   // sunamu      tag ->   无边框
-    {NULL, "VirtualBox Manager", NULL, 1 << 9, 1, 0, 1, -1, 0},
-    {NULL, "VirtualBox", NULL, 1 << 9, 1, 0, 1, -1, 0},
+    {"wpsoffice", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
+    {"Zotero", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
+    {"chrome", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},   // chrome     tag -> 
+    {"Chromium", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0}, // Chromium   tag -> 
+    {"firefox", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},  // chrome     tag -> 
+    {"music", NULL, NULL, 1 << 3, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
+    {"spotify", NULL, NULL, 1 << 3, 0, 0, 1, -1, 0},  // spotify    tag ->   无边框
+    {"sunamu", NULL, NULL, 1 << 3, 1, 0, 1, -1, 3},   // sunamu     tag ->   无边框
+    {NULL, "VirtualBox Manager", NULL, 1 << 4, 1, 0, 1, -1, 0},
+    {NULL, "VirtualBox", NULL, 1 << 4, 1, 0, 1, -1, 0},
 
     {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
@@ -111,6 +107,7 @@ static const Rule rules[] = {
     {NULL, "copyq", NULL, 0, 1, 0, 0, -1, 0},                // copyq    浮动
     {"Ibus-setup-libpinyin", NULL, NULL, 0, 1, 0, 0, -1, 0}, // ibus设置界面 浮动
     {"blueman-manager", NULL, NULL, 0, 1, 0, 0, -1, 0},      // blueman  浮动
+    {NULL, "Steam", NULL, 0, 1, 0, 0, -1, 0},
 
     /** 部分特殊class的规则 */
     {"float", NULL, NULL, 0, 1, 0, 0, -1, 0},        // class = float       浮动
@@ -130,8 +127,8 @@ static const Layout overviewlayout = {"舘", overview};
 
 /* 自定义布局 */
 static const Layout layouts[] = {
-    {"﬿", tile},      /* 主次栈 */
-    {"﩯", magicgrid}, /* 网格 */
+    {"󰕴", tile},      /* 主次栈 */
+    {"󰕰", magicgrid}, /* 网格 */
 };
 
 #define SHCMD(cmd)                     \
@@ -204,9 +201,9 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_l, exchange_client, {.i = RIGHT}}, /* super shift l      | 二维交换窗口 (仅平铺) */
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
-    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 65x16")},                                       /* super s          | 打开scratch终端        */
-    {MODKEY, XK_Return, spawn, SHCMD("st")},                                                                          /* super enter      | 打开st终端             */
-    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                                                                     /* super -          | 打开全局st终端         */
+    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 90x16")}, /* super s          | 打开scratch终端        */
+    {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
+    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
     {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                                                          /* super e         | 打开/关闭pcmanfm       */
     {MODKEY, XK_d, spawn, SHCMD("rofi -show combi -run-shell-command '{terminal} -e bash -ic \" {cmd} && read \"'")}, /* super d          | rofi run          */
     {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                                                         /* super n          | 锁定屏幕               */
@@ -221,15 +218,11 @@ static Key keys[] = {
     /* super shift key : 将聚焦窗口移动到对应tag */
     /* key tag cmd */
     TAGKEYS(XK_1, 0, 0)
-        TAGKEYS(XK_2, 1, 0)
-            TAGKEYS(XK_3, 2, 0)
-                TAGKEYS(XK_4, 3, 0)
-                    TAGKEYS(XK_5, 4, 0)
-                        TAGKEYS(XK_6, 5, 0)
-                            TAGKEYS(XK_w, 6, 0)
-                                TAGKEYS(XK_c, 7, "google-chrome-stable")
-                                    TAGKEYS(XK_m, 8, "spotify")
-                                        TAGKEYS(XK_v, 9, "virtualbox")};
+    TAGKEYS(XK_w, 1, 0)
+    TAGKEYS(XK_c, 2, "google-chrome-stable")
+    TAGKEYS(XK_m, 3, "spotify")
+    TAGKEYS(XK_v, 4, "virtualbox")
+    TAGKEYS(XK_2, 5, 0)};
 
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */

@@ -17,11 +17,10 @@ update() {
     vol_text=$(amixer -M get Master | tail -n1 | sed -r "s/.*\[(.*)%\].*/\1/")
     vol_muted=$(amixer get Master | tail -n1 | sed -r "s/.*\[(on|off)\]/\1/")
 
-    if [ "$vol_muted" = "off" ];      then vol_text="--"; vol_icon="ﱝ";
-    elif [ "$vol_text" -eq 0 ];  then vol_text="00"; vol_icon="";
-    elif [ "$vol_text" -lt 30 ]; then vol_icon=""; vol_text=$vol_text;
-    elif [ "$vol_text" -le 60 ]; then vol_icon="󰕾";
-    else vol_icon=""; fi
+    if [ "$vol_muted" = "off" ]; then vol_text="--"; vol_icon="󰝟";
+    elif [ "$vol_text" -lt 33 ]; then vol_icon="󰕿";
+    elif [ "$vol_text" -lt 66 ]; then vol_icon="󰖀"; 
+    else vol_icon="󰕾"; fi
 
     icon=" $vol_icon"
     text=" $vol_text% "
@@ -32,7 +31,7 @@ update() {
 
 notify() {
     update
-    notify-send -r 9527 -h int:value:$vol_text -h string:hlcolor:#dddddd "$vol_icon Volume"
+    notify-send -r 9527 -h int:value:$vol_text -h string:hlcolor:#dddddd "Volume"
 }
 
 click() {

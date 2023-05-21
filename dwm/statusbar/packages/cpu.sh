@@ -23,7 +23,7 @@ update() {
 }
 
 notify() {
-    notify-send "󰻠 CPU tops" "\n$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)\\n\\n(100% per core)" -r 9527
+    notify-send "CPU tops" "\n$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)\\n" -r 9527
 }
 
 call_htop() {

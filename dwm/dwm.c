@@ -1203,6 +1203,8 @@ void drawbar(Monitor *m)
         // 判断是否需要绘制 && 判断颜色设置
         if (!ISVISIBLE(c))
             continue;
+        if (c->isscratchpad)
+            continue;
         if (m->sel == c)
             scm = SchemeSel;
         else if (HIDDEN(c))
