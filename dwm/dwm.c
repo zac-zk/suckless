@@ -1590,7 +1590,7 @@ void focusstack(const Arg *arg)
 
     for (c = selmon->clients; c; c = c->next)
     {
-        if (ISVISIBLE(c) && (issingle || !HIDDEN(c)))
+        if (!c->isscratchpad && ISVISIBLE(c) && (issingle || !HIDDEN(c)))
         {
             last++;
             tempClients[last] = c;

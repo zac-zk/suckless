@@ -123,7 +123,7 @@ static const Rule rules[] = {
     {NULL, NULL, "broken", 0, 1, 0, 0, -1, 0}, // 错误载入时 会有broken 浮动
 };
 static const char *overviewtag = "OVERVIEW";
-static const Layout overviewlayout = {"舘", overview};
+static const Layout overviewlayout = {"󰕬", overview};
 
 /* 自定义布局 */
 static const Layout layouts[] = {
