@@ -12,7 +12,7 @@ daemons() {
     $DWM/scripts/wp-change.sh       #开机设定壁纸
     /usr/lib/polkit-kde-authentication-agent-1 & #提权
     killall fcitx5 ; fcitx5 -d &                    # 开启输入法
-    killall picom ; picom --experimental-backends --config $DWM/scripts/picom.conf -b
+    killall picom ; picom --config $DWM/scripts/picom.conf -b
     killall copyq ; copyq &
     killall cfw ; cfw &
     killall nm-applet ; nm-applet &

@@ -10,7 +10,7 @@ call_menu() {
 execute_menu() {
     case $1 in
         ' open picom')
-            coproc (picom --experimental-backends --config ~/suckless/dwm/scripts/picom.conf -b)
+            coproc (picom --config ~/suckless/dwm/scripts/picom.conf -b)
             ;;
         ' close picom')
             killall picom

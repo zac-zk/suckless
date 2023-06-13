@@ -56,10 +56,9 @@ static const char scratchpadname[] = "scratchpad";
 
 /* 自定义tag名称 */
 /* 自定义特定实例的显示状态 */
-//            ﮸  ﭮ 切
 static const char *tags[] = {
     "󰣇",  // tag:0  key:1  desc:terminal1
-    "󰏆",  // tag:1  key:w  desc:terminal7
+    "󰏆",  // tag:1  key:w  desc:office
     "",  // tag:2  key:c  desc:browser
     "󰎄",  // tag:3  key:m  desc:music
     "",  // tag 4  key:v  desc:virtualmachine
@@ -88,8 +87,8 @@ static const Rule rules[] = {
     {"Chromium", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0}, // Chromium   tag -> 
     {"firefox", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},  // chrome     tag -> 
     {"music", NULL, NULL, 1 << 3, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
-    {"spotify", NULL, NULL, 1 << 3, 0, 0, 1, -1, 0},  // spotify    tag ->   无边框
-    {"sunamu", NULL, NULL, 1 << 3, 1, 0, 1, -1, 3},   // sunamu     tag ->   无边框
+    {NULL, "spotify", NULL, 1 << 3, 0, 0, 1, -1, 0},  // spotify    tag ->   无边框
+    {"sunamu", NULL, NULL, 1 << 3, 1, 0, 1, -1, 5},   // sunamu     tag ->   无边框
     {NULL, "VirtualBox Manager", NULL, 1 << 4, 1, 0, 1, -1, 0},
     {NULL, "VirtualBox", NULL, 1 << 4, 1, 0, 1, -1, 0},
 
@@ -102,12 +101,15 @@ static const Rule rules[] = {
     {"Vncviewer", NULL, NULL, 0, 1, 0, 1, -1, 2},  // Vncviewer           浮动、无边框 屏幕顶部
     {"flameshot", NULL, NULL, 0, 1, 0, 0, -1, 0},  // 火焰截图            浮动
     {"Pcmanfm", NULL, NULL, 0, 1, 0, 1, -1, 3},    // pcmanfm             浮动、无边框 右上角
+    {"wps", NULL, NULL, 0, 1, 0, 1, -1, 1},    // wps小窗口             浮动、无边框 右上角
     {NULL, "goldendict", NULL, 0, 1, 0, 0, -1, 0},
     {NULL, NULL, "Fcitx 配置", 0, 1, 0, 0, -1, 0},           // fcitx5配置  浮动
     {NULL, "copyq", NULL, 0, 1, 0, 0, -1, 0},                // copyq    浮动
     {"Ibus-setup-libpinyin", NULL, NULL, 0, 1, 0, 0, -1, 0}, // ibus设置界面 浮动
-    {"blueman-manager", NULL, NULL, 0, 1, 0, 0, -1, 0},      // blueman  浮动
+    {NULL, "blueman-manager", NULL, 0, 1, 0, 0, -1, 0},      // blueman  浮动
     {NULL, "Steam", NULL, 0, 1, 0, 0, -1, 0},
+    {NULL, "pavucontrol", NULL, 0, 1, 0, 0, -1, 0},
+    {"ARGoS", NULL, NULL, 0, 1, 0, 0, -1, 0},
 
     /** 部分特殊class的规则 */
     {"float", NULL, NULL, 0, 1, 0, 0, -1, 0},        // class = float       浮动
