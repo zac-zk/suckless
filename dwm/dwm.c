@@ -1808,7 +1808,7 @@ void showonlyorall(const Arg *arg)
     if (issinglewin(NULL) || !selmon->sel)
     {
         for (c = selmon->clients; c; c = c->next)
-            if (ISVISIBLE(c))
+            if (ISVISIBLE(c)&&!c->isscratchpad)
                 show(c);
     }
     else

@@ -2,8 +2,8 @@
 
 # 打印菜单
 call_menu() {
-    echo ' update statusbar'
     [ "$(ps aux | grep picom | grep -v 'grep\|rofi\|nvim')" ] && echo ' close picom' || echo ' open picom'
+    echo ' update statusbar'
 }
 
 # 执行菜单

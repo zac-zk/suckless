@@ -21,7 +21,7 @@ static const int nmaster = 1;                  /* 主工作区 窗口数量 */
 static const unsigned int snap = 10;           /* 边缘依附宽度 */
 static const unsigned int baralpha = 0xc0;     /* 状态栏透明度 */
 static const unsigned int borderalpha = 0xdd;  /* 边框透明度 */
-static const char *fonts[] = {"Iosevka Custom:size=14:antialias=true:autohint=true",
+static const char *fonts[] = {"JetBrains mono:size=14:antialias=true:autohint=true",
                               "WenQuanYi Micro Hei:size=14:antialias=true:autohint=true",
                               "Symbols Nerd Font:pixelsize=24:type=1000-em:antialias=true:autohint=true"};
 static const char *colors[][3] = {
@@ -59,10 +59,10 @@ static const char scratchpadname[] = "scratchpad";
 static const char *tags[] = {
     "󰣇",  // tag:0  key:1  desc:terminal1
     "󰏆",  // tag:1  key:w  desc:office
-    "",  // tag:2  key:c  desc:browser
+    "",  // tag:2  key:x  desc:browser
     "󰎄",  // tag:3  key:m  desc:music
     "",  // tag 4  key:v  desc:virtualmachine
-    "",  // tag:5  key:2  desc:terminal
+    "",  // tag:5  key:c  desc:coding
 };
 
 /* 自定义窗口显示规则 */
@@ -91,6 +91,7 @@ static const Rule rules[] = {
     {"sunamu", NULL, NULL, 1 << 3, 1, 0, 1, -1, 5},   // sunamu     tag ->   无边框
     {NULL, "VirtualBox Manager", NULL, 1 << 4, 1, 0, 1, -1, 0},
     {NULL, "VirtualBox", NULL, 1 << 4, 1, 0, 1, -1, 0},
+    {"VSCodium", NULL, NULL, 1<<5, 0, 0, 0, -1, 0},
 
     {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
@@ -161,9 +162,9 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_Return, zoom, {0}}, /* super shift enter  |  将当前聚焦窗口置为主窗口 */
 
     {MODKEY, XK_t, togglefloating, {0}},                /* super t            |  开启/关闭 聚焦目标的float模式 */
-    {MODKEY | ShiftMask, XK_f, toggleallfloating, {0}}, /* super shift f      |  开启/关闭 全部目标的float模式 */
+    {MODKEY | ShiftMask, XK_t, toggleallfloating, {0}}, /* super shift t      |  开启/关闭 全部目标的float模式 */
     {MODKEY, XK_f, fullscreen, {0}},                    /* super f            |  开启/关闭 全屏 */
-    {MODKEY, XK_b, togglebar, {0}},                     /* super b      |  开启/关闭 状态栏 */
+    {MODKEY, XK_b, togglebar, {0}},                     /* super b            |  开启/关闭 状态栏 */
     {MODKEY, XK_g, toggleglobal, {0}},                  /* super g            |  开启/关闭 全局 */
     {MODKEY, XK_u, toggleborder, {0}},                  /* super u            |  开启/关闭 边框 */
     {MODKEY | ShiftMask, XK_e, incnmaster, {.i = +1}},  /* super e            |  改变主工作区窗口数量 (1 2中切换) */
@@ -207,7 +208,7 @@ static Key keys[] = {
     {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
     {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
     {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                                                          /* super e         | 打开/关闭pcmanfm       */
-    {MODKEY, XK_d, spawn, SHCMD("rofi -show combi -run-shell-command '{terminal} -e bash -ic \" {cmd} && read \"'")}, /* super d          | rofi run          */
+    {MODKEY, XK_d, spawn, SHCMD("rofi -show run -run-shell-command '{terminal} -e bash -ic \" {cmd} && read \"'")}, /* super d          | rofi run          */
     {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                                                         /* super n          | 锁定屏幕               */
     {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                                                      /* super F3   | 音量加                 */
     {MODKEY, XK_F2, spawn, SHCMD("$DWM/scripts/set_vol.sh down")},                                                    /* super F2 | 音量减                 */
@@ -221,10 +222,10 @@ static Key keys[] = {
     /* key tag cmd */
     TAGKEYS(XK_1, 0, 0)
     TAGKEYS(XK_w, 1, 0)
-    TAGKEYS(XK_c, 2, "google-chrome-stable")
+    TAGKEYS(XK_x, 2, "google-chrome-stable")
     TAGKEYS(XK_m, 3, "spotify")
     TAGKEYS(XK_v, 4, "virtualbox")
-    TAGKEYS(XK_2, 5, 0)};
+    TAGKEYS(XK_c, 5, "vscodium")};
 
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */
