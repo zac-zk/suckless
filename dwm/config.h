@@ -43,7 +43,7 @@ static const unsigned int alphas[][3] = {
     [SchemeSelGlobal] = {OPAQUE, baralpha, borderalpha},
     [SchemeNormTag] = {OPAQUE, baralpha, borderalpha},
     [SchemeSelTag] = {OPAQUE, baralpha, borderalpha},
-    [SchemeBarEmpty] = {NULL, 0xa0a, NULL},
+    [SchemeBarEmpty] = {NULL, 0x000000, NULL},
     [SchemeStatusText] = {OPAQUE, 0x88, NULL},
 };
 
@@ -60,9 +60,9 @@ static const char *tags[] = {
     "󰣇",  // tag:0  key:1  desc:terminal1
     "󰏆",  // tag:1  key:w  desc:office
     "",  // tag:2  key:x  desc:browser
-    "󰎄",  // tag:3  key:m  desc:music
+    "",  // tag:3  key:c  desc:coding
     "",  // tag 4  key:v  desc:virtualmachine
-    "",  // tag:5  key:c  desc:coding
+    "󰎄",  // tag:5  key:m  desc:music
 };
 
 /* 自定义窗口显示规则 */
@@ -82,16 +82,18 @@ static const Rule rules[] = {
 
     /** 普通优先度 */
     {"wpsoffice", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
+    {"ONLYOFFICE Desktop Editors", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
     {"Zotero", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
     {"chrome", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},   // chrome     tag -> 
     {"Chromium", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0}, // Chromium   tag -> 
-    {"firefox", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},  // chrome     tag -> 
-    {"music", NULL, NULL, 1 << 3, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
-    {NULL, "spotify", NULL, 1 << 3, 0, 0, 1, -1, 0},  // spotify    tag ->   无边框
-    {"sunamu", NULL, NULL, 1 << 3, 1, 0, 1, -1, 5},   // sunamu     tag ->   无边框
-    {NULL, "VirtualBox Manager", NULL, 1 << 4, 1, 0, 1, -1, 0},
+    {"Firefox Beta", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},  // firefox     tag -> 
+    {"Vivaldi-stable", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},  // vivaldi     tag -> 
+    {"VSCodium", NULL, NULL, 1<<3, 0, 0, 0, -1, 0},
     {NULL, "VirtualBox", NULL, 1 << 4, 1, 0, 1, -1, 0},
-    {"VSCodium", NULL, NULL, 1<<5, 0, 0, 0, -1, 0},
+    {NULL, "VirtualBox Manager", NULL, 1 << 4, 1, 0, 1, -1, 0},
+    {"music", NULL, NULL, 1 << 5, 1, 0, 1, -1, 0},    // music      tag ->  浮动、无边框
+    {NULL, "spotify", NULL, 1 << 5, 0, 0, 1, -1, 0},  // spotify    tag ->   无边框
+    {"sunamu", NULL, NULL, 1 << 5, 1, 0, 1, -1, 5},   // sunamu     tag ->   无边框
 
     {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
@@ -144,8 +146,8 @@ static const Layout layouts[] = {
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY, TAG, cmd)                            \
     {MODKEY, KEY, view, {.ui = 1 << TAG, .v = cmd}},      \
-        {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}}, \
-        {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},
+    {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}}, \
+    {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},
 
 static Key keys[] = {
     /* modifier            key              function          argument */
@@ -207,7 +209,7 @@ static Key keys[] = {
     {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 90x16")}, /* super s          | 打开scratch终端        */
     {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
     {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
-    {MODKEY, XK_e, spawn, SHCMD("pcmanfm")},                                                                          /* super e         | 打开/关闭pcmanfm       */
+    {MODKEY, XK_e, spawn, SHCMD("pcmanfm --daemon-mode")},                                                                          /* super e         | 打开/关闭pcmanfm       */
     {MODKEY, XK_d, spawn, SHCMD("rofi -show run -run-shell-command '{terminal} -e bash -ic \" {cmd} && read \"'")}, /* super d          | rofi run          */
     {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                                                         /* super n          | 锁定屏幕               */
     {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                                                      /* super F3   | 音量加                 */
@@ -222,10 +224,10 @@ static Key keys[] = {
     /* key tag cmd */
     TAGKEYS(XK_1, 0, 0)
     TAGKEYS(XK_w, 1, 0)
-    TAGKEYS(XK_x, 2, "google-chrome-stable")
-    TAGKEYS(XK_m, 3, "spotify")
+    TAGKEYS(XK_x, 2, "vivaldi-stable")
+    TAGKEYS(XK_c, 3, "vscodium")
     TAGKEYS(XK_v, 4, "virtualbox")
-    TAGKEYS(XK_c, 5, "vscodium")};
+    TAGKEYS(XK_m, 5, "spotify")};
 
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */
