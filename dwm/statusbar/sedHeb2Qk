@@ -1,0 +1,7 @@
+
+export _light='^slight^^c#ffffff^^b#3333330x99^ 󰌶^c#ffffff^^b#3333330x99^ 0% '
+export _icons='^sicons^^c#ffffff^^b#3333330x99^ 󰍜 '
+export _mem='^smem^^c#ffffff^^b#3333330x99^ 󰍛^c#ffffff^^b#3333330x99^ 31% '
+export _date='^sdate^^c#ffffff^^b#3333330x99^ 󱑆^c#ffffff^^b#3333330x99^ 10/07 20:18:36 '
+export _vol='^svol^^c#ffffff^^b#3333330x99^ 󰖀^c#ffffff^^b#3333330x99^ 40% '
+export _bat='^sbat^^c#ffffff^^b#3333330x99^ 󰂄^c#ffffff^^b#3333330x99^ 100% '

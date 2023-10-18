@@ -82,6 +82,7 @@ static const Rule rules[] = {
 
     /** 普通优先度 */
     {"wpsoffice", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
+    {"wps", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
     {"ONLYOFFICE Desktop Editors", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
     {"Zotero", NULL, NULL, 1 << 1, 0, 0, 0, -1, 0},
     {"chrome", NULL, NULL, 1 << 2, 0, 0, 0, -1, 0},   // chrome     tag -> 
@@ -97,6 +98,7 @@ static const Rule rules[] = {
 
     {"wemeetapp", NULL, NULL, TAGMASK, 1, 1, 0, -1, 0},                  // !!!腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"scratchpad", "scratchpad", "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
+    {NULL, NULL, "scratchpad", TAGMASK, 1, 1, 1, -1, 2}, // scratchpad          浮动、全局、无边框 屏幕顶部
 
     {"feh", NULL, NULL, 0, 1, 0, 1, -1, 0},
     {NULL, "qq", NULL, 0, 0, 0, 1, -1, 0},         // qq  无边框
@@ -206,10 +208,13 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_l, exchange_client, {.i = RIGHT}}, /* super shift l      | 二维交换窗口 (仅平铺) */
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
-    {MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 90x16")}, /* super s          | 打开scratch终端        */
-    {MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
-    {MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
-    {MODKEY, XK_e, spawn, SHCMD("pcmanfm --daemon-mode")},                                                                          /* super e         | 打开/关闭pcmanfm       */
+    //{MODKEY, XK_s, togglescratch, SHCMD("st -t scratchpad -c float -g 90x16")}, /* super s          | 打开scratch终端        */
+    //{MODKEY, XK_Return, spawn, SHCMD("st")},                                    /* super enter      | 打开st终端             */
+    //{MODKEY, XK_minus, spawn, SHCMD("st -c FG")},                               /* super -          | 打开全局st终端         */
+    {MODKEY, XK_s, togglescratch, SHCMD("kitty --class FN --name scratchpad -o remember_window_size=no  -o initial_window_width=1500 -o initial_window_height=750")},
+    {MODKEY, XK_Return, spawn, SHCMD("kitty")},
+    {MODKEY, XK_minus, spawn, SHCMD("kitty --class FG")},
+    {MODKEY, XK_e, spawn, SHCMD("pcmanfm --daemon-mode")},                                                                         /* super e         | 打开/关闭pcmanfm       */
     {MODKEY, XK_d, spawn, SHCMD("rofi -show run -run-shell-command '{terminal} -e bash -ic \" {cmd} && read \"'")}, /* super d          | rofi run          */
     {MODKEY, XK_n, spawn, SHCMD("$DWM/scripts/blurlock.sh")},                                                         /* super n          | 锁定屏幕               */
     {MODKEY, XK_F3, spawn, SHCMD("$DWM/scripts/set_vol.sh up")},                                                      /* super F3   | 音量加                 */

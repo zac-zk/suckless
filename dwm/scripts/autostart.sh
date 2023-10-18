@@ -19,20 +19,20 @@ kill_clients() {
 start_clients() {
     picom -b
     fcitx5 -d
-    pcmanfm --daemon-mode
-    redshift &
-    copyq --start-server
     cfw &
     dunst &
     nm-applet &
+    redshift &
+    copyq --start-server
+    pcmanfm --daemon-mode
 }
 
 daemons() {
 	[ $1 ] && sleep $1
-	xrandr --output eDP-1-1 --primary --auto --output HDMI-0 --mode 2560x1440 --rate 75 --left-of eDP-1-1 --auto
-	$DWM/statusbar/statusbar.sh cron &           # 开启状态栏定时更新
-	$DWM/scripts/wp-change.sh                    #开机设定壁纸
 	/usr/lib/polkit-kde-authentication-agent-1 & #提权
+	xrandr --output eDP-1-1 --primary --auto --output HDMI-0 --mode 2560x1440 --rate 75 --left-of eDP-1-1 --auto
+	$DWM/scripts/wp-change.sh                    #开机设定壁纸
+	$DWM/statusbar/statusbar.sh cron &           # 开启状态栏定时更新
     start_clients
 }
 
